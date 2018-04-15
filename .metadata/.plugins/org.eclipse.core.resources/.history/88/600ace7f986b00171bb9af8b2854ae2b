@@ -1,0 +1,81 @@
+package servlet;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ListContraller {
+
+	
+	int   lineDel=4;
+	BufferedReader   br=new   BufferedReader(new   FileReader( "c:/a.txt "));
+	StringBuffer   sb=new   StringBuffer(4096);
+	String   temp=null;
+	int   line=0;
+	while((temp=br.readLine())!=null){
+	        line++;
+	        if(line==lineDel)   continue;
+	        sb.append(temp).append( "\r\n ");
+	}
+	br.close();
+	BufferedWriter   bw=new   BufferedWriter(new   FileWriter( "c:/a.txt "));
+	bw.write(sb.toString());
+	bw.close();
+	  public static void main(String[] args) {
+		  
+		  ListContraller test = new ListContraller();
+	        List<String> list;
+	        try {
+	            list = test.readFile("D:\\array.txt","CompletionScore1/192.168.0.101");
+	            test.writeFile("D:\\array.txt", list);
+	        } catch (IOException e1) {
+	            // TODO Auto-generated catch block
+	            e1.printStackTrace();
+	        }
+	    }
+	 
+	    private List<String> readFile(String filePath, String str)throws IOException {
+	        File file = new File(filePath);
+	        BufferedReader reader = null;
+	        List<String> list = new ArrayList<String>();
+	        reader = new BufferedReader(new FileReader(file));
+	        String text = reader.readLine();
+	        while (text != null) {
+	            if (!text.trim().equals(str)) {
+	                list.add(text + "\r\n");
+	            }
+	            text = reader.readLine();
+	        }
+	        reader.close();
+	        return list;
+	    }
+	 
+	    private void writeFile(String filePath, List<String> list)
+	            throws IOException {
+	        File file = new File(filePath);
+	        if (!file.exists()) {
+	            file.createNewFile();
+	        }
+	        FileOutputStream outputStream = new FileOutputStream(file);
+	        for (String s : list) {
+	            outputStream.write(s.getBytes());
+	        }
+	        outputStream.close();
+	    }
+	}

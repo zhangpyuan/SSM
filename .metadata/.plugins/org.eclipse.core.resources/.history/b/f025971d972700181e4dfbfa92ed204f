@@ -1,0 +1,8 @@
+package test;
+
+public class Truck {
+	private float load; //载重量 
+	public Truck(String name,float load,float rent)
+	{ this.name=name; this.load=load; this.rent=rent; } public float getLoad() { return load; } @Override public String toString() { return name+"\t"+rent+"元/天\t"+load+"吨\t"; } 
+	
+}

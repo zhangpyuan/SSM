@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+	<!-- ========== Form Bean Definitions =================================== -->
+	<form-beans>
+		<form-bean name="EditAidszhPasswordForm"
+			type="cn.com.sinosoft.cdc.aids.admin.actionform.EditAidszhPasswordForm" />
+		<!-- ========== ZHAIDS 20070410 =================================== -->
+		<form-bean name="edtPatientsForm"
+			type="cn.com.sinosoft.cdc.aids.zhmst.actionform.PatientsEditForm" />
+
+		<form-bean name="qryCountryHivAidsForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+
+		<form-bean name="edtCoutryHivAidsForm"
+			type="cn.com.sinosoft.cdc.aids.country.EdtCountryHivAidsForm" />
+		<!--Begin AIDSZH_FILEINFO -->
+		<form-bean name="ratFileInfoQueryForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+		<form-bean name="ratFileInfoEditForm"
+			type="cn.com.sinosoft.cdc.aids.country.upload.UploadBlobFileInfoSubmitForm" />
+		<!--End AIDSZH_FILEINFO -->
+
+		<!--Begin AIDSZH_FILETYPE -->
+		<form-bean name="ratFileTypeQueryForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+		<form-bean name="ratFileTypeEditForm"
+			type="cn.com.sinosoft.frame.action.CommonEditForm" />
+		<!--End AIDSZH_FILETYPE -->
+		<form-bean name="zoneBean"
+			type="cn.com.sinosoft.cdc.system.zone.bean.ZoneBean" />
+		<!--20070721===================begin========================== -->
+		<form-bean name="edtRptJCForm"
+			type="cn.com.sinosoft.cdc.aids.masculinecard.actionform.EidtRptJCForm" />
+		<form-bean name="qryRptJCForm"
+			type="cn.com.sinosoft.cdc.aids.masculinecard.actionform.QueryRptJCForm" />
+
+		<!--20100511===================add by wdw========================== -->
+		<form-bean name="edtRptKTSCForm"
+			type="cn.com.sinosoft.cdc.aids.zhvct.actionform.EidtRptKTSCForm" />
+		<form-bean name="qryRptKTSCForm"
+			type="cn.com.sinosoft.cdc.aids.zhvct.actionform.QueryRptKTSCForm" />
+		<form-bean name="excelHIVKTSCForm"
+			type="cn.com.sinosoft.cdc.aids.zhvct.actionform.ExcelHIVKTSC" />
+		<!--===========================end by wdw 20100511======== -->
+
+		<!--===========================begin Bulletin 20070807======== -->
+		<form-bean name="edtBulletinForm"
+			type="cn.com.sinosoft.cdc.aids.bulletin.ViewBulletinForm" />
+		<form-bean name="qryBulletinForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+		<!--=====================================end===================== -->
+		<!-- ==========================begin zhhbi 20070514=================================== -->
+		<form-bean name="edtPersonRoleForm"
+			type="cn.com.sinosoft.cdc.aids.zhhbi.actionform.EditPersonRoleForm" />
+		<form-bean name="qryPersonRoleForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+
+
+		<!-- ========== END ZHAIDS 20070410 =================================== -->
+		<form-bean name="defaultReportForm"
+			type="cn.com.sinosoft.framework.form.DefaultReportForm" />
+		<!--20060125 EXPORT -->
+		<form-bean name="excelExportMasForm"
+			type="cn.com.sinosoft.cdc.aids.masculinecard.actionform.ExportExcelForMasForm" />
+		<!--20060323 xudy historycard export -->
+		<form-bean name="zoneQryForm"
+			type="cn.com.sinosoft.cdc.aids.masculinecard.actionform.ZoneQryForm" />
+		<form-bean name="zoneQryForm11"
+			type="cn.com.sinosoft.cdc.aids.zhvct.actionform.ZoneQryForm" />
+
+
+		<form-bean name="qryOrgManForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+		<form-bean name="edtOrgManForm"
+			type="cn.com.sinosoft.cdc.aids.orgman.EditOrgManForm" />
+
+
+
+		<form-bean name="OrgQryForm" type="cn.com.sinosoft.cdc.aids.orgtag.OrgQryForm" />
+		<form-bean name="OrgQryForm2"
+			type="cn.com.sinosoft.cdc.aids.orgtag.OrgQryForm2" />
+		<form-bean name="Aids_potOrgQryForm"
+			type="cn.com.sinosoft.cdc.aids.potinsp.actionform.Aids_potOrgQryForm" />
+		<!--pot stat xudy -->
+		<form-bean name="Stat_PotDusForm"
+			type="cn.com.sinosoft.cdc.aids.potinsp.actionform.Stat_DusForm">
+		</form-bean>
+		<!--clinic log manage -->
+		<form-bean name="qryClientUserLogForm"
+			type="cn.com.sinosoft.frame.action.BusiCustomQueryForm" />
+
+
+		<!-- export 20050525 -->
+		<form-bean name="excelExportGraForm"
+			type="cn.com.sinosoft.cdc.aids.gratistreat.actionform.ExportExcelForGraForm" />
+
+		<!-- childgra export 20070908 -->
+		<form-bean name="excelExportChildGraForm"
+			type="cn.com.sinosoft.cdc.aids.childgratistreat.actionform.ExportExcelForChildGraForm" />
+		<!-- asynchronism upload 20050721 -->
+		<form-bean name="asynGraImptForm"
+			type="cn.com.sinosoft.cdc.aids.gratistreat.actionform.AsynGraImptForm" />
+		<form-bean name="qryimpfileForm"
+			type="cn.com.sinosoft.frame.action.BusiCustomQueryForm" />
+		<form-bean name="edtUploadForm"
+			type="cn.com.sinosoft.frame.action.CommonEditForm" />
+		<!-- ========== Dictionary Definitions =================================== 
+			llr -->
+		<form-bean name="edtDicForm"
+			type="cn.com.sinosoft.cdc.aids.dictionary.actionform.EditDicForm" />
+		<form-bean name="qryDicForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+
+		<!-- 客户支持日志 -->
+		<form-bean name="qryPregnancyForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+		<form-bean name="edtcustomerlogForm"
+			type="birth.dictionary.actionform.EditcustomerlogForm" />
+		<!--编码下载 -->
+		<form-bean name="downloadCodeForm"
+			type="birth.dictionary.actionform.DownloadCodeForm" />
+		<form-bean name="codeToExcelForm"
+			type="cn.com.sinosoft.frame.action.CommonQueryForm" />
+
+		<form-bean name="rptAidsForm"
+			type="cn.com.sinosoft.frame.action.ReportQueryForm" />
+		<!-- 变更单 -->
+		<form-bean name="edtcustomerchangeForm"
+			type="birth.dictionary.actionform.EditcustomerchangeForm" />
+		<!--QUESTION -->
+		<!-- 发布单 -->
+		<form-bean name="edtcustomerreleaseForm"
+			type="birth.dictionary.actionform.EditcustomerreleaseForm" />
+
+		<!-- 系统故障 -->
+		<form-bean name="edtcustomersystemForm"
+			type="birth.dictionary.actionform.EditcustomersystemForm" />
+		<!-- 数据申请 -->
+		<form-bean name="edtcustomerdataForm"
+			type="birth.dictionary.actionform.EditcustomerdataForm" />
+		<!-- 停机申请 -->
+		<form-bean name="edtcustomerdowntimeForm"
+			type="birth.dictionary.actionform.EditcustomerdowntimeForm" />
+		<!--日志分析 -->
+		<form-bean name="edtcustomeranalysisForm"
+			type="birth.dictionary.actionform.EditcustomeranalysisForm" />
+
+		<form-bean name="ratFileInfoEditForm"
+			type="cn.com.sinosoft.cdc.aids.country.upload.UploadBlobFileInfoSubmitForm" />
+
+
+		<!-- end by renhl -->
+	</form-beans>
+	<global-forwards>
+		<forward name="logon" contextRelative="true" path="/common/logoff.jsp" />
+		<forward name="login" contextRelative="true"
+			path="/aids/functree/logoff.jsp" />
+		<forward name="loginsgra" contextRelative="true"
+			path="/aids/functree/logoffSgra.jsp" />
+		<forward contextRelative="true" name="error" path="/common/error.jsp" />
+		<forward name="success" contextRelative="true" path="/common/success.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<!--=============================================LOGON==================================llr========== -->
+		<action type="cn.com.sinosoft.cdc.aids.logon.LogonAction"
+			requireLogon="false" clearSession="false" path="/logon">
+			<forward name="pass" path="/getIndexPageAction.do" />
+		</action>
+
+
+		<action path="/leaveAction" forward="/logoff/logoff.jsp">
+		</action>
+
+		<action path="/logoff" type="cn.com.sinosoft.cdc.aids.logon.LogoffAction"
+			requireLogon="false" clearSession="true">
+			<forward name="leave" path="/leaveAction.do" />
+		</action>
+		<!--=============================================masculine=================================llr=========== -->
+		<!--=============================================LOGON==================================llr========== -->
+
+
+		<action type="cn.com.sinosoft.cdc.aids.logon.LoginAction"
+			requireLogon="false" clearSession="false" path="/login">
+			<forward name="pass" path="/getIndexPageAction.do" />
+		</action>
+
+
+		<action path="/getIndexPageAction" forward="/functree/index.jsp" />
+		<!-- +++++++++++++++++++++++++客户支持日志 -->
+
+		<action path="/customerlog" forward="/birth/dictionary/customerlog.jsp" />
+		<action path="/edtcustomerlog" forward="/birth/dictionary/edtcustomerlog.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customerlogAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customerlog.do" />
+		</action>
+		<action name="edtcustomerlogForm" requireLogon="true"
+			clearSession="false" path="/edtcustomerlogAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomerlog.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customerlogAction.do?act=reQuery&amp;noToken=true" redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomerlog.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomerlog.do?pageState=view" />
+		</action>
+		<!-- 客户支持统计 -->
+		<action path="/checkDetectOrg" forward="/zhvct/checkrpt/checkdetectOrg.jsp" />
+		<action name="rptAidsForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/checkDetectOrgAction">
+			<forward name="b_01_PUB_REPORT_QUERY" path="/checkDetectOrg.do" />
+		</action>
+		<!-- 问题解决状态统计 -->
+		<action path="/checkProblemOrg" forward="/birth/dictionary/checkProblemOrg.jsp" />
+		<action name="rptAidsForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/checkProblemOrgAction">
+			<forward name="b_02_PUB_REPORT_QUERY" path="/checkProblemOrg.do" />
+		</action>
+
+
+
+		<!-- OA -->
+		<action path="/customerlogoa" forward="/birth/dictionary/customerlogoa.jsp" />
+		<action path="/edtcustomerlogoa" forward="/birth/dictionary/edtcustomerlogoa.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customerlogoaAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customerlogoa.do" />
+		</action>
+		<action name="edtcustomerlogForm" requireLogon="true"
+			clearSession="false" path="/edtcustomerlogoaAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomerlogoa.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customerlogoaAction.do?act=reQuery&amp;noToken=true"
+				redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomerlogoa.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomerlogoa.do?pageState=view" />
+		</action>
+
+
+		<!--编码下载 -->
+		<action path="/downloadCodeAction" forward="/birth/dictionary/downloadCode.jsp" />
+		<action path="/downloadCode" name="downloadCodeForm"
+			type="cn.com.sinosoft.frame.action.FrameAction" requireLogon="true"
+			clearSession="false">
+		</action>
+		<!-- 变更单图片下载 -->
+		<action name="frameFormImp"
+			type="cn.com.sinosoft.cdc.aids.country.download.DLoadForChangeRatFileInfoAction"
+			requireLogon="true" path="/changedownLoadFile" />
+
+		<!-- 数据申请图片下载 -->
+		<action name="frameFormImp"
+			type="cn.com.sinosoft.cdc.aids.country.download.DLoadFoDataRatFileInfoAction"
+			requireLogon="true" path="/datadownLoadFile" />
+
+
+		<!-- 发布单图片下载 -->
+		<action name="frameFormImp"
+			type="cn.com.sinosoft.cdc.aids.country.download.DLoadForReleaseRatFileInfoAction"
+			requireLogon="true" path="/releasedownLoadFile" />
+		<!-- 系统故障图片下载 -->
+		<action name="frameFormImp"
+			type="cn.com.sinosoft.cdc.aids.country.download.DLoadFoSystemRatFileInfoAction"
+			requireLogon="true" path="/systemdownLoadFile" />
+		<!-- 停机申请图片下载 -->
+		<action name="frameFormImp"
+			type="cn.com.sinosoft.cdc.aids.country.download.DLoadFoDownRatFileInfoAction"
+			requireLogon="true" path="/timedownLoadFile" />
+		<!-- 导出Excel -->
+		<action name="codeToExcelForm"
+			type="cn.com.sinosoft.cdc.emergency.actionform.ExportExcelAction"
+			requireLogon="true" clearSession="false" path="/codeToExcel">
+		</action>
+
+
+		<!-- 变更单 -->
+		<action path="/customerchange" forward="/birth/customer/customerchange.jsp" />
+		<action path="/edtcustomerchange" forward="/birth/customer/edtcustomerchange.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customerchangeAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customerchange.do" />
+		</action>
+		<action name="edtcustomerchangeForm" requireLogon="true"
+			clearSession="false" path="/edtcustomerchangeAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomerchange.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customerchangeAction.do?act=reQuery&amp;noToken=true"
+				redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomerchange.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomerchange.do?pageState=view" />
+		</action>
+
+
+
+		<!-- 发布单 -->
+		<action path="/customerrelease" forward="/birth/customer/customerrelease.jsp" />
+		<action path="/edtcustomerrelease" forward="/birth/customer/edtcustomerrelease.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customerreleaseAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customerrelease.do" />
+		</action>
+		<action name="edtcustomerreleaseForm" requireLogon="true"
+			clearSession="false" path="/edtcustomerreleaseAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomerrelease.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customerreleaseAction.do?act=reQuery&amp;noToken=true"
+				redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomerrelease.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomerrelease.do?pageState=view" />
+		</action>
+
+
+		<!-- 系统故障 -->
+		<action path="/customersystem" forward="/birth/customer/customersystem.jsp" />
+		<action path="/edtcustomersystem" forward="/birth/customer/edtcustomersystem.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customersystemAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customersystem.do" />
+		</action>
+		<action name="edtcustomersystemForm" requireLogon="true"
+			clearSession="false" path="/edtcustomersystemAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomersystem.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customersystemAction.do?act=reQuery&amp;noToken=true"
+				redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomersystem.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomersystem.do?pageState=view" />
+		</action>
+
+		<!-- 数据申请 -->
+		<action path="/customerdata" forward="/birth/customer/customerdata.jsp" />
+		<action path="/edtcustomerdata" forward="/birth/customer/edtcustomerdata.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customerdataAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customerdata.do" />
+		</action>
+		<action name="edtcustomerdataForm" requireLogon="true"
+			clearSession="false" path="/edtcustomerdataAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomerdata.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customerdataAction.do?act=reQuery&amp;noToken=true" redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomerdata.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomerdata.do?pageState=view" />
+		</action>
+
+		<!-- 停机申请 -->
+		<action path="/downtime" forward="/birth/customer/downtime.jsp" />
+		<action path="/edtdowntime" forward="/birth/customer/edtdowntime.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/downtimeAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/downtime.do" />
+		</action>
+		<action name="edtcustomerdowntimeForm" requireLogon="true"
+			clearSession="false" path="/edtdowntimeAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtdowntime.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/downtimeAction.do?act=reQuery&amp;noToken=true" redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtdowntime.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtdowntime.do?pageState=view" />
+		</action>
+
+
+
+		<!-- 日志分析 -->
+		<action path="/customeranalysis" forward="/birth/customer/customeranalysis.jsp" />
+		<action path="/edtcustomeranalysis" forward="/birth/customer/edtcustomeranalysis.jsp" />
+		<action name="qryPregnancyForm" requireLogon="true"
+			clearSession="false" path="/customeranaAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_01_FY0000" path="/customeranalysis.do" />
+		</action>
+		<action name="edtcustomeranalysisForm" requireLogon="true"
+			clearSession="false" path="/edtcustomeranaAction" type="cn.com.sinosoft.frame.action.FrameAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtcustomeranalysis.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/customeranaAction.do?act=reQuery&amp;noToken=true" redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtcustomeranalysis.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtcustomeranalysis.do?pageState=view" />
+		</action>
+
+		<!--变更单 -->
+
+		<action path="/fileInfoEdit" forward="/birth/upload/fileInfoEdit.jsp" />
+		<action path="/changefileInfoList" forward="/birth/upload/changefileInfoList.jsp" />
+
+		<action name="ratFileInfoQueryForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/changeratFileInfoQueryAction">
+			<forward name="b_01_FY0000" path="/changefileInfoList.do" />
+		</action>
+
+		<!-- 发布单 -->
+		<action path="/releasefileInfoList" forward="/birth/upload/releasefileInfoList.jsp" />
+		<action name="ratFileInfoQueryForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/releaseratFileInfoQueryAction">
+			<forward name="b_01_FY0000" path="/releasefileInfoList.do" />
+		</action>
+		<!-- 数据申请 -->
+		<action path="/datafileInfoList" forward="/birth/upload/datafileInfoList.jsp" />
+		<action name="ratFileInfoQueryForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/dataratFileInfoQueryAction">
+			<forward name="b_01_FY0000" path="/datafileInfoList.do" />
+		</action>
+
+		<!-- 系统故障 -->
+		<action path="/systemfileInfoList" forward="/birth/upload/systemfileInfoList.jsp" />
+		<action name="ratFileInfoQueryForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/systemratFileInfoQueryAction">
+			<forward name="b_01_FY0000" path="/systemfileInfoList.do" />
+		</action>
+
+		<!-- 停机申请 -->
+		<action path="/downtimefileInfoList" forward="/birth/upload/downtimefileInfoList.jsp" />
+		<action name="ratFileInfoQueryForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/downtimeratFileInfoQueryAction">
+			<forward name="b_01_FY0000" path="/downtimefileInfoList.do" />
+		</action>
+
+
+
+
+
+
+		<action name="ratFileInfoEditForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="true" path="/ratFileInfoEditAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/fileInfoEdit.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/ratFileInfoQueryAction.do?act=queryParent&amp;noToken=true"
+				redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/fileInfoEdit.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/fileInfoEdit.do?pageState=view" />
+		</action>
+
+		<action path="/fileTypeEdit" forward="/birth/upload/fileTypeEdit.jsp" />
+		<action path="/fileTypeList" forward="/birth/upload/fileTypeList.jsp" />
+
+		<action name="ratFileTypeQueryForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/ratFileTypeQueryAction">
+			<forward name="b_01_FY0000" path="/fileTypeList.do" />
+		</action>
+		<action name="ratFileTypeEditForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="true" path="/ratFileTypeEditAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/fileTypeEdit.do?pageState=add" />
+			<forward name="b_01_PUB_PARENT_EDIT"
+				path="/ratFileTypeQueryAction.do?act=queryParent&amp;noToken=true"
+				redirect="true" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/fileTypeEdit.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/fileTypeEdit.do?pageState=view" />
+		</action>
+
+		<!-- <action name="frameFormImp" type="cn.com.sinosoft.cdc.aids.action.CommonImgAction" 
+			requireLogon="false" path="/staffShowImg" /> -->
+
+
+
+		<!--美沙酮病人信息 -->
+		<action path="/qryPatients" forward="/zhmst/patients/qryPatients.jsp" />
+		<action path="/edtPatients" forward="/zhmst/patients/edtPatients.jsp" />
+
+		<action name="qryPatientsForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/qryPatientsAction">
+			<forward name="b_01_FY0000" path="/qryPatients.do" />
+			<forward name="b_00_NOQUERY" path="/qryPatients.do" />
+		</action>
+
+		<action name="edtPatientsForm" type="cn.com.sinosoft.frame.action.FrameAction"
+			requireLogon="true" clearSession="false" path="/edtPatientsAction">
+			<forward name="b_00_PUB_PARENT_ADDINPUT" path="/edtPatients.do?pageState=add" />
+			<forward name="b_00_PUB_PARENT_EDITINPUT" path="/edtPatients.do?pageState=edit" />
+			<forward name="b_01_PUB_PARENT_VIEW" path="/edtPatients.do?pageState=view" />
+			<forward name="b_01_AIDSZH_MST_PATIENT_EDIT"
+				path="/qryPatientsAction.do?act=reQuery&amp;noToken=true" />
+		</action>
+
+
+
+
+
+		<!-- =========== END 新抗病毒治疗信息管理 ================================ -->
+	</action-mappings>
+	<controller>
+		<!-- The "input" parameter on "action" elements is the name of a local 
+			or global "forward" rather than a module-relative path -->
+		<set-property property="inputForward" value="true" />
+	</controller>
+	<message-resources
+		parameter="cn.com.sinosoft.cdc.aids.resource.ApplicationResources" />
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+	</plug-in>
+</struts-config>

@@ -1,0 +1,39 @@
+package test;
+
+public class Test_one {
+
+	//查看是否有车辆可租
+	
+	public static int havaCat(){
+		
+		int CatAccount=0;
+		boolean sm=smainlAvailable();
+		
+		boolean lm=lowAvailable();
+		boolean bm=bigAvailable();
+		
+		return 0;
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	private static boolean smainlAvailable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+
+	public static void main(String[] args) {
+		
+		
+		
+		System.out.println("wojkk");
+	}
+}

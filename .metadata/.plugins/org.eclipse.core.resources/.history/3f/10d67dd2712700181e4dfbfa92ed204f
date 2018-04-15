@@ -1,0 +1,22 @@
+package test;
+
+public class Test_one {
+
+	//查看是否有车辆可租
+	
+	public static int havaCat(){
+		
+		
+		return true;
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		
+		
+		System.out.println("wojkk");
+	}
+}

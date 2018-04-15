@@ -1,0 +1,20 @@
+package com.tz.util;
+
+	
+/**
+ *@author zpy
+ *@description
+ *网页下载图片工具类
+ *@data 2018年4月1日
+ */
+public class TmDownImgUtil {
+
+	public static String htmlSpurce(String link,String encoding){
+		
+		return "";
+	}
+	
+	
+	
+	
+}

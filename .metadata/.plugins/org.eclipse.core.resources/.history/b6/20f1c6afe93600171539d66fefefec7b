@@ -1,0 +1,320 @@
+<%@ page contentType="text/html;charset=GBK" language="java" %>
+<%@ page import="cn.com.sinosoft.frame.utility.GetFieldValue" %>
+<%@ page import="cn.com.sinosoft.frame.dao.ValueObject" %>
+<%@ page import="cn.com.sinosoft.frame.busicustom.utility.BusiCustomHelper" %>
+<%@ page import="java.util.*" %>
+
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/frame-app.tld" prefix="frameApp" %>
+<%@ taglib uri="/WEB-INF/frame-html.tld" prefix="frameHtml" %>
+<%@ taglib uri="/WEB-INF/bs-html.tld" prefix="bsHtml" %>
+<%@ taglib uri="/WEB-INF/permission-func.tld" prefix="perm" %>
+<html:html>
+<head>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="expires" content="0">
+
+<LINK href="<%=request.getContextPath()%>/css/listCss.css" type=text/css rel=stylesheet>
+<LINK href="<%=request.getContextPath()%>/css/default_style.css" type=text/css rel=stylesheet>
+<style type="text/css">
+.tb_title{
+  background:#ADB0EC;
+  font-size:13px;
+  font-weight:bold;
+  color:#ffffff;
+  text-align:center
+}
+</style>
+<script language="javascript" src="<%=request.getContextPath()%>/js/Common.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/js/func_sys.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/js/frameTag.js"></script>
+<SCRIPT language="javascript" type="" src="<%=request.getContextPath()%>/js/cdc.js"></script>
+
+</head>
+<script language="javascript">
+	function sbar(st){st.style.backgroundColor='#FFFFFF';}
+	function cbar(st){st.style.backgroundColor='';}
+</script>
+<script language="javascript">
+   /*****************************************************************************
+   *本段代码用于 用于添加提交的处理脚本
+   *创建人: ych
+   *修改人: 
+    /*****************************************************************************/
+   
+   function addSubmit(obj){     
+	obj.form.action="<%=request.getContextPath()%>/serviceability/populationEditAction.do?";
+	obj.form.act.value="addParentInput";	
+	document.all.busiId.value="BS_POPULATIONRPT";	
+	obj.form.submit();
+   }
+
+   /*****************************************************************************
+   *本段代码用于 用于修改提交的处理脚本
+   *创建人: ych
+   *修改人:
+   *创建日期: 2005-7-28
+   *相关说明:1.
+   *	     2.
+   ******************************************************************************/   
+   function editSubmit(formObj,codeVal){
+	formObj.action="<%=request.getContextPath()%>/serviceability/populationEditAction.do?";	
+	formObj.key_RECORDID.value = codeVal;	
+	formObj.act.value="editParentInput";
+	document.all.busiId.value="BS_POPULATIONRPT";
+	//formObj.pageState.value="edit";	
+	formObj.submit();	
+   }
+   /*****************************************************************************
+   *本段代码用于 用于删除提交的处理脚本
+   *创建人: ych
+   *修改人:
+   *创建日期: 2005-7-28
+   *相关说明:1.
+   *	     2.
+   ******************************************************************************/   
+   function delSubmit(formObj,codeVal){
+   	formObj.action="<%=request.getContextPath()%>/serviceability/populationEditAction.do";
+	formObj.act.value="delParentSubmit";
+	formObj.key_RECORDID.value=codeVal;
+	document.all.busiId.value="BS_POPULATIONRPT";
+	
+	if(window.confirm("是否真正删除该记录?")){
+	   formObj.submit();
+	 }
+   }
+   /*****************************************************************************
+   *本级查询
+   *创建人: ych 
+   ******************************************************************************/   
+   function querySelfSubmit(obj){
+    obj.form.act.value="queryParent";  
+    document.all.item("QUERY(QRY_TYPE)").value="0"; 
+	obj.form.submit();
+   }
+   
+   
+   /*****************************************************************************
+   *下级查询
+   *创建人: ych 
+   ******************************************************************************/   
+   function queryLowerSubmit(obj){
+    obj.form.act.value="queryParent";  
+    document.all.item("QUERY(QRY_TYPE)").value="1"; 
+	obj.form.submit();
+   }
+   
+   
+   /*****************************************************************************
+   *本级及下级查询
+   *创建人: ych 
+   ******************************************************************************/   
+   function queryAllSubmit(obj){
+    obj.form.act.value="queryParent";  
+    document.all.item("QUERY(QRY_TYPE)").value="2"; 
+	obj.form.submit();
+   }
+   
+   
+   /*****************************************************************************
+   *本段代码用于 用于查看提交的处理脚本
+   *创建人: ych
+   *修改人:
+   *创建日期: 2005-7-28
+   *相关说明:1.
+   *	     2.
+   ******************************************************************************/   
+   function viewSubmit(formObj,codeVal){     
+		formObj.action="<%=request.getContextPath()%>/serviceability/populationEditAction.do";		
+		formObj.key_RECORDID.value = codeVal;
+		formObj.act.value="viewParent";
+		document.all.busiId.value="BS_POPULATIONRPT";
+		formObj.submit();
+   } 
+   
+   
+   function getObjByName(formObj,strName){
+	try{
+		for(var i=0;i<formObj.elements.length;i++){
+			if(formObj.elements[i].name == strName){				
+				return formObj.elements[i];
+			}
+		}
+		return null;
+	}catch(e){
+		alert("getObjByName,error:"+e.description);
+	}
+  } 
+  function funcZonechange(){
+      var obj = document.all.item("QUERY(ZONECODE)");
+      var zonecodeLevel = getZoneLevel(obj.value);
+      
+      
+      var addBtn = document.all.addBtn;
+      
+      if(addBtn==null||typeof(addBtn)=="undefined"){
+      }else{
+         addBtn.disabled=true;
+      }
+      
+     if(zonecodeLevel<6){
+        document.all.lower.disabled=false;
+     }else{
+       document.all.lower.disabled=true;
+     }
+  } 
+
+  function getZoneLevel(zonecode){
+     if(zonecode=="00000000"){
+        return 0;
+     }else if(zonecode.substr(2,8)=="000000"){
+        return 2;
+     }else if(zonecode.substr(4,8)=="0000"){
+        return 4;
+     }else{
+        return 6;
+     }
+  }
+  function toExcel(formObj,act){
+	    var saveValue= new Object();
+	    saveValue.action=formObj.action;
+	    saveValue.act=formObj.act;
+	    saveValue.busiId = formObj.busiId; 
+		saveValue.target=formObj.target;
+		
+	    formObj.action="<%=request.getContextPath()%>/serviceability/populationQryExcelAction.do?linage=0";
+	    formObj.act.value=act;
+	    
+	 
+		formObj.target="excelFrame";
+		formObj.submit();
+			  
+		formObj.action = saveValue.action;
+	    formObj.act.value=saveValue.act.value;
+	    formObj.busiId.value = saveValue.busiId.value; 
+		formObj.target=saveValue.target;
+  }
+  function toProvinceExcel(formObj){
+    var val = document.all.item("QUERY(ZONECODE)").value;
+    if(val.substr(2,8)=='000000'&&val!="00000000"){
+    }else{
+       alert("请选择具体的省市");
+       return false;
+    }
+    toExcel(formObj,"toProvinceExcel");
+  }
+ 
+  function setBtnState(){
+    if(typeof(document.all.addBtn)!="undefined"){
+       document.all.addBtn.disabled=true;
+    }
+  }  
+</script>
+<body>
+<html:form action="/populationQryAction.do">
+<%String qry_type = (String) GetFieldValue.lookup(pageContext,"QUERY(QRY_TYPE)",null); 
+  String recordid= (String) GetFieldValue.lookup(pageContext,"QUERY(RECORDID)",null);
+  
+  String zoneExists = (String) GetFieldValue.lookup(pageContext,"QUERY(ZONEEXISTS)",null);    
+%>
+
+   <frameHtml:busiId reqParam="false" value="BS_POPULATIONRPT"/>                                             
+   <html:hidden property="act"/>   
+   <html:hidden property="QUERY(QRY_TYPE)" /><%--查询类型  0:本级查询  1：下级查询  2:本级及下级查询--%>
+   
+   <input type="hidden" name="key_RECORDID">   
+   
+      <table style="width:100%" class="tbMain">
+		<tr>
+			<td class="tb_title" colspan="4"><font size=4><span/>人口基本情况</span></font></td>			
+		</tr>
+	    <tr bordercolor="#C9C9C9" class="back1">
+        	<td align=right width="20%">选择年度</td>
+            <td width="30%">
+                 <bsHtml:yearCtl property="QUERY(YEARS)" startDiff="10" endDiff="10"  init="true" otherProperty=" onChange='setBtnState()'"></bsHtml:yearCtl></td>
+	        <td align=right width="20%">地区名称</td>
+	        <td width="30%">
+	        <html:hidden property="QUERY(ZONECODE)" /> 
+			<frameHtml:zone 
+					 property="ctlZoneCode" 
+					 zoneTopLevel="userperm" 
+					 zoneBottomLevel="county" 
+					 zoneDefault="user" 
+					 zoneVisible="true" 
+					 orgVisible="false" 
+					 orgTypeVisible="false" 					
+					 zonePeer="document.all['QUERY(ZONECODE)']"
+					 zoneOnChange="setBtnState()"
+			/>	
+	            </td>
+        </tr>
+   
+		<tr>
+			<td align="right" class="tbSub_button" colspan="4">
+			    <%if(zoneExists.equals("0")){%>
+			        <font color="red">该年度的地区信息在地区字典表中不存在，请选择其它年度</font>
+			    <%}%>			
+			    <%if(qry_type.equals("0")&&zoneExists.equals("1")&&((recordid==null)||(recordid.equals("")))){%>	  		  
+				<input  type="button" name="addBtn" value="添加" onclick="addSubmit(this);" />
+				<%}%>				
+			    <input  type="button" name="self" value=本级查询 onclick="querySelfSubmit(this)" />
+			    <input  type="button" name="all" value=本级及下级查询 onclick="queryAllSubmit(this)" />	
+			
+			</td>
+			
+		</tr>
+		<tr>
+		<td colspan="4">	
+		<table width="100%" class="tbMain">
+		  
+			<tr class="tbMain_title">				
+			<frameApp:listTitle/>
+			<%if(qry_type.equals("0")){%>
+			   <%if(recordid!=null&&(!recordid.equals(""))){%>
+			     <td align=center width="10%" nowrap>操作</td>	
+			    <%}%> 
+			<%}%>		
+		</tr>
+		      
+      <frameApp:frameIterate  property="paginationMgr" rowNo="rowNo" indexId="indexId" scope="session">
+      <tr class="tbMain_data" align="center" onMouseOver="sbar(this)" onMouseOut="cbar(this)">        
+        <frameApp:listValue/>
+		<%System.out.println("qry_type is "+qry_type);
+		  System.out.println("recordid is "+recordid);%>
+         <%if(qry_type.equals("0")){%>
+        
+           <%if(recordid!=null&&(!recordid.equals(""))){%>
+	           <td nowrap>
+		            <!--<a  href="javascript:editSubmit(this.document.populationQryForm,'<frameApp:fieldValue fieldName="RECORDID"/>')">修改</a>-->
+		            <a  href="javascript:viewSubmit(this.document.populationQryForm,'<frameApp:fieldValue fieldName="RECORDID"/>')">查看</a>            
+		            <!--<a  href="javascript:delSubmit(this.document.populationQryForm,'<frameApp:fieldValue fieldName="RECORDID"/>')">删除</a>-->
+	           </td> 
+            <%}%> 
+          
+         <%}%>      
+      </tr>
+     </frameApp:frameIterate>         
+        </table>        
+      </td>
+   </tr>
+</table> 
+<table width="95%">
+    	  <tr>
+    	    <td>
+    	    <%if(zoneExists.equals("1")){%>    	    
+    	        <input type=button value="导出Excel" onclick="toExcel(this.form,'toExcel')">
+    	        <input type=button value="导出全省Excel" onclick="toProvinceExcel(this.form)">
+    	     <%}%>
+    	    </td>
+    	    <td>
+	       <frameApp:pagination forward="b_01_FY0000"/>
+	    </td>
+          </tr>
+       </table>
+   </html:form>
+</body>
+<iframe id="excelFrame" name="excelFrame" width=0 height=0></iframe>
+</html:html>

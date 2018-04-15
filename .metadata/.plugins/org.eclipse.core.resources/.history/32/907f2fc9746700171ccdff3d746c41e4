@@ -1,0 +1,184 @@
+/*
+ * 创建日期 2005-12-20
+ */
+package cn.com.sinosoft.cdc.bs.report;
+
+import java.util.ArrayList;
+
+import cn.com.sinosoft.frame.busicustom.utility.BusiCustomHelper;
+import cn.com.sinosoft.frame.exception.GeneralException;
+import cn.com.sinosoft.frame.utility.NumberUtils;
+import cn.com.sinosoft.frame.utility.StringUtil;
+
+/**
+ * @author Administrator
+ */
+public class ReportPersonWorkTimeService extends BaseBSReportServiceXp4
+{
+    
+	protected static final String personGroup[] = new String[]{"5年以下","5-","10-","20-","30-"};
+	
+	
+	/**
+	 * @return
+	 * @see cn.com.sinosoft.cdc.bs.report.BaseBSReportService#getQuerySql()
+	 */
+	protected String getQuerySql()
+	{
+		String zonecode = (String)queryMaps.get("ZONECODE");        
+		int zoneLevel = BusiCustomHelper.getLevel(zonecode);       
+		StringBuffer zeroStr= new StringBuffer("");
+		for(int i=0;i<8-zoneLevel-2;i++){
+			zeroStr.append("0");
+		}
+		
+		StringBuffer querySql = new StringBuffer(4000)
+		.append("select z.CNNAME,p.* from (select substr(v.apanagecode,1,[ZONELEN]) as zonecode, ")
+		.append("sum(v.total),   ")
+		.append(" sum(v.year5),  ")
+		.append(" sum(v.year5_), ")
+		.append(" sum(v.year10_), ")
+		.append(" sum(v.year20_), ")
+		.append(" sum(v.year30_)  ")
+		.append(" from (select o.apanagecode, ")
+		.append(" o.orgcode,  ")
+		.append(" o.sub,      ")
+		.append(" o.ecomtype, ")
+		.append(" o.years,    ")
+		.append(" (select count(*) ")             
+		.append("    from BS_PERSON_BASEINFO b ")
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR]) as amount,")
+//		.append(" (select count(distinct p.id) ")   
+		.append("    from BS_PERSON_BASEINFO b, BS_CODE_BUSINESS_RANGE3 r  ")
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR]  and p.id = r.id_maintab(+)")
+		.append("     and b.status = '01' and  [PROF_TYPE]) as total, ")
+		.append(" (select count(distinct p.id) ")
+		.append("    from BS_PERSON_BASEINFO b, BS_CODE_BUSINESS_RANGE3 r  ") 
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR] and  p.id = r.id_maintab(+)")
+		.append("     and b.dt_start_job > add_months(to_date('[YEAR]1231', 'yyyymmdd'),-5*12) ")
+		.append("     and b.status = '01' and  [PROF_TYPE]) as year5, ")
+		.append(" (select count(distinct p.id) ")
+		.append("    from BS_PERSON_BASEINFO b, BS_CODE_BUSINESS_RANGE3 r  ") 
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR] and p.id = r.id_maintab(+)")
+		.append("     and b.dt_start_job <= add_months(to_date('[YEAR]1231', 'yyyymmdd'),-5 *12) ")
+		.append("     and b.dt_start_job >  add_months(to_date('[YEAR]1231', 'yyyymmdd'),-10*12) ")
+		.append("     and b.status = '01' and  [PROF_TYPE]) as year5_, ")
+		.append(" (select count(distinct p.id) ")
+		.append("    from BS_PERSON_BASEINFO b, BS_CODE_BUSINESS_RANGE3 r    ") 
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR] and p.id = r.id_maintab(+)")
+		.append("     and b.dt_start_job <= add_months(to_date('[YEAR]1231', 'yyyymmdd'),-10*12) ")
+		.append("     and b.dt_start_job >  add_months(to_date('[YEAR]1231', 'yyyymmdd'),-20*12) ")
+		.append("     and b.status = '01' and  [PROF_TYPE]) as year10_, ")
+		.append(" (select count(distinct p.id) ")
+		.append("    from BS_PERSON_BASEINFO b, BS_CODE_BUSINESS_RANGE3 r  ") 
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR] and p.id = r.id_maintab(+)")
+		.append("     and b.dt_start_job <= add_months(to_date('[YEAR]1231', 'yyyymmdd'),-20*12) ")
+		.append("     and b.dt_start_job >  add_months(to_date('[YEAR]1231', 'yyyymmdd'),-30*12) ")
+		.append("     and b.status = '01' and  [PROF_TYPE]) as year20_, ")
+		.append(" (select count(distinct p.id) ")
+		.append("    from BS_PERSON_BASEINFO b, BS_CODE_BUSINESS_RANGE3 r  ") 
+		.append("   where o.orgcode = b.orgcode and b.years=[YEAR] and p.id = r.id_maintab(+)")
+		.append("     and b.dt_start_job <= add_months(to_date('[YEAR]1231', 'yyyymmdd'),-30*12) ")
+		.append("     and b.status = '01' and  [PROF_TYPE]) as year30_ ")
+		.append("   from organise o ")
+		.append("  where o.sub = '[LEVEL]'")
+		.append("    and o.ecomtype in ('J100','J200') ")
+		.append("    and o.JIKONGZHONGXIN='1' and (o.IS_XN_CDC='0' or o.IS_XN_CDC is null) ")
+		.append("    and o.APANAGECODE like zoneheader('[ZONECODE]') || '%') v ")
+		.append(" group by substr(v.apanagecode,1,[ZONELEN])) p, ")
+		.append("(select a.zonecode,a.CNNAME from zonecode a ");
+		if(zoneLevel<6&&(zoneLevel/2!=Integer.parseInt((String)queryMaps.get("LEVEL")))){
+			querySql.append("where a.zonecode<>'").append(zonecode).append("' and a.zonecode like zoneheader('[ZONECODE]') || '__'|| '").append(zeroStr.toString()).append("'");
+		}else{
+			querySql.append("where a.zonecode='").append(zonecode).append("'");
+		}
+		querySql.append("    ) z     ")
+		.append("where substr(z.zonecode,1,[ZONELEN]) = p.zonecode(+) order by z.zonecode");
+    
+		appendCommonSqlCondition(querySql,0);
+		
+		String sql = querySql.toString();
+		return sql;
+	}
+	
+	/**
+	 * 为显示的行数生成一个查询SQL
+	 * @return SQL
+	 */
+	protected String getQueryRowNameSql()
+	{
+		String zonecode = (String)queryMaps.get("ZONECODE");
+		if(zonecode==null)	return null;
+		
+		int zoneLevel = BusiCustomHelper.getLevel(zonecode);       
+		StringBuffer zeroStr= new StringBuffer("");
+		for(int i=0;i<8-zoneLevel-2;i++){
+			zeroStr.append("0");
+		}
+				
+		StringBuffer querySql = new StringBuffer(200)
+		.append("select a.CNNAME  from zonecode a ");
+		if(zoneLevel<6&&(zoneLevel/2!=Integer.parseInt((String)queryMaps.get("LEVEL")))){
+			querySql.append(" where a.zonecode<>'").append(zonecode).append("' and a.zonecode like zoneheader('[ZONECODE]') || '__'|| '").append(zeroStr.toString()).append("'");
+		}else{
+			querySql.append(" where a.zonecode='").append(zonecode).append("'");
+		}
+		querySql.append(" order by a.zonecode");	
+		    
+		if (appendCommonSqlCondition(querySql,1) > 0)
+		{
+			return querySql.toString();
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+
+	/**
+	 * @return
+	 * @see cn.com.sinosoft.cdc.bs.report.BaseBSReportService#getReportTitle()
+	 */
+	protected String getReportTitle()
+	{
+		return "疾病预防控制机构人员工作年限构成";
+	}
+
+	/**
+	 * @return
+	 * @throws GeneralException
+	 * @see cn.com.sinosoft.cdc.bs.report.BaseBSReportService#getColArray()
+	 */
+	protected ArrayList getRowTitleArray() throws GeneralException
+	{
+		String sql = getQueryRowNameSql();
+		if (sql == null)
+		{
+			return null;
+		}
+		ArrayList rowTitle = getDao().getQueryStringList(sql.toString(),null);
+		rowTitle = (ArrayList)rowTitle.get(1);
+		ArrayList all = new ArrayList();
+		for (int i=0; i<rowTitle.size(); i++)
+		{
+			ArrayList row = (ArrayList)rowTitle.get(i);
+			ArrayList group = new ArrayList();
+			group.add(String.valueOf(i));
+			group.add(row.get(0));
+			sexs.add(group);
+		}
+		return sexs;
+	}
+	
+	public static void main(String arg[])
+	{
+		ReportPersonAgeService t = new ReportPersonAgeService();
+		System.out.println(t.getQuerySql());
+	}
+
+	protected ArrayList getReportHead() throws GeneralException {
+		return super.getReportHeadXp(personGroup);
+	}
+
+}

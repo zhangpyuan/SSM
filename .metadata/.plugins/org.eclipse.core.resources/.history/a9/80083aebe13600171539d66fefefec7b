@@ -1,0 +1,461 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="cn.com.sinosoft.frame.dao.DaoQryHelper"%>
+<%@ page contentType="text/html;charset=GBK" language="java"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/frame-app.tld" prefix="frameApp"%>
+<%@ taglib uri="/WEB-INF/frame-html.tld" prefix="frameHtml"%>
+<%@ page import="com.uncnet.framework.utils.permission"%>
+<%@ taglib uri="/WEB-INF/bs-html.tld" prefix="bsHtml"%>
+<%@ page import="cn.com.sinosoft.frame.utility.DateTimeUtils"%>
+
+<html:html>
+<head>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<%
+	    permission perm = (permission) session.getAttribute("PermMgr");
+		String userName = "" + (String) perm.getAccountname();
+		String userID = "" + perm.getUserid();
+		String orgID = "" + perm.getOrgID();
+		String orgName = "" + perm.getOrgname();
+		String zonecode = "" + perm.getUserzonecode();
+%>
+<%
+	    String pageState = cn.com.sinosoft.frame.utility.GetFieldValue.getPageState(pageContext);
+		String ZONECODE = request.getParameter("QUERY(ZONECODE)");
+		String ORGCODE = request.getParameter("QUERY(ORGCODE)");
+		String STAFFINNUM = "0";
+		String STAFFNUM =  "0";
+		String PERSON_OUTNUM = "0";
+		String OFFICE_NUM="0";
+		String EXECUTIVE_NUM="0";
+		String OPERATION_NUM="0";
+		String ORGNAMEBY="请选择";
+		StringBuffer sql2=new StringBuffer();
+ 		sql2=new StringBuffer("select orgname from organise where orgcode='").append(ORGCODE).append("'");
+ 			ArrayList lst2 = DaoQryHelper.getInstance().getQueryStringList(null, sql2.toString(), null);
+ 		if (lst2 != null && lst2.size() > 0) {
+ 		 ORGNAMEBY = (String) ((ArrayList) lst2.get(0)).get(0);
+    
+  
+ 		}
+	 if(!pageState.trim().equals("add")){
+
+	     StringBuffer sql=new StringBuffer();
+	     StringBuffer house_sql=new StringBuffer();
+         String year=request.getParameter("year");
+         String orgcode=request.getParameter("orgcode");
+
+ 		 sql.append(" select count(case when p.status = '01' then 1  end) as zaizhiNum,                            ")       
+	        .append("        count(case when p.status = '01' and p.IFREGULAR = 'Y' then 1 end) as zaibianNum,      ")
+	        .append("        count(case when p.status = '01' and p.ifregular = 'N' then 1 end) as bianwaiNum       ")
+	        .append("   from bs_person_baseinfo p   where orgcode='").append(orgcode).append("' and years =").append(year);
+ 		 
+ 		house_sql.append(" select count(recordid) as OFFICE_NUM, ")
+        .append(" count(case when d.type='1' then 1 end) as EXECUTIVE_NUM, ")
+        .append(" count(case when d.type='2' then 1 end) as OPERATION_NUM ")
+        .append(" from  BS_DD_DEPARTMENT d where d.orgcode='")
+        .append(orgcode).append("' and d.year=").append(year);
+ 		 
+ 		ArrayList lst = DaoQryHelper.getInstance().getQueryStringList(null, sql.toString(), null);
+ 		if (lst != null && lst.size() > 0) {
+ 		  STAFFNUM = (String) ((ArrayList) lst.get(0)).get(0);
+ 		  STAFFINNUM = (String) ((ArrayList) lst.get(0)).get(1);
+ 		  PERSON_OUTNUM= (String) ((ArrayList) lst.get(0)).get(2);
+ 		}
+ 		
+ 		ArrayList lst3 = DaoQryHelper.getInstance().getQueryStringList(null, house_sql.toString(), null);
+  		if(lst3 != null && lst3.size() > 0){
+  			 OFFICE_NUM=(String) ((ArrayList) lst3.get(0)).get(0);
+  			 EXECUTIVE_NUM=(String) ((ArrayList) lst3.get(0)).get(1);
+  			 OPERATION_NUM=(String) ((ArrayList) lst3.get(0)).get(2);
+  		}
+ 		
+ 		}//else{
+ 	     //STAFFNUM = request.getAttribute("STAFFNUM").toString();          //在职
+ 		 //STAFFINNUM = request.getAttribute("STAFFINNUM").toString();      //在编
+	     //PERSON_OUTNUM = request.getAttribute("PERSON_OUTNUM").toString();//编外
+	     
+	     //OFFICE_NUM=request.getAttribute("OFFICE_NUM").toString();  //科室数
+		 //EXECUTIVE_NUM=request.getAttribute("EXECUTIVE_NUM").toString();//行政
+		 //OPERATION_NUM=request.getAttribute("OPERATION_NUM").toString(); //业务
+ 		//}
+		  
+%>
+<LINK href="<%=request.getContextPath()%>/css/editCss.css" type=text/css
+	rel=stylesheet>
+<LINK href="<%=request.getContextPath()%>/css/default_style.css"
+	type=text/css rel=stylesheet>
+<script language="javascript"
+	src="<%=request.getContextPath()%>/js/frameTag.js"></script>
+<script language="javascript"
+	src="<%=request.getContextPath()%>/js/popupDlg.js"></script>
+<script language="javascript"
+	src="<%=request.getContextPath()%>/js/Common.js"></script>
+<script language="javascript"
+	src="<%=request.getContextPath()%>/js/formValidate.js"></script>
+<script language="javascript"
+	src="<%=request.getContextPath()%>/js/serviceability.js"></script>
+<script language="javascript"
+	src="<%=request.getContextPath()%>/js/edtOrgBaseAj.js"></script>
+	
+<script language="javascript">
+ 
+   
+   
+	function back(formObj){
+		formObj.act.value = "queryParent";
+		formObj.busiId.value = "BS_ORGANISE_BASE";
+		formObj.action = "<%=request.getContextPath()%>/serviceability/qryOrgBaseAction.do?act=reQuery";
+		formObj.submit();
+    }
+    
+    function checkForm(obj){  
+
+            isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(ORGCODE)") ,"组织机构名称不能为空！");
+            isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(ORG_NUM)") ,"组织机构代码不能为空！");
+   	        isNotEmpty(obj["MODEL(BS_ORGANISE_BASE).STRING(YEARS)"],"请选择年度！");	
+            isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(PERSON_QUOTA)") ,"编制数不能为空！");
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(PERSON_QUOTA)"),"编制数需输入正数");	
+            isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(STAFFINNUM)") ,"在编人员数不能为空！");
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(STAFFINNUM)"),"在编人员数需输入正数");
+		    
+		    var persquotaNum = obj.item("MODEL(BS_ORGANISE_BASE).STRING(PERSON_QUOTA)").value;
+		    var staffInNum = obj.item("MODEL(BS_ORGANISE_BASE).STRING(STAFFINNUM)").value;
+		    if(persquotaNum!="" && persquotaNum!= null && staffInNum!="" && staffInNum!= null ){
+                if (parseInt(staffInNum,10)>parseInt(persquotaNum,10)){
+                	 if(confirm("单位在编人员数已超出编制数，是否继续？")){
+                	 
+                     }else{
+                         return false;
+                     }
+                }
+			 }		   
+			/*if(staffInNum!="" && staffInNum!= null ){
+				if (parseInt(staffInNum,10) < 2 || parseInt(staffInNum,10) > 5000){
+					alert("在编人员数应该在2-5000之间!");
+					return false;
+				}				
+			}*/
+            isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(STAFFNUM)") ,"在职人员数不能为空！");
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(STAFFNUM)"),"在职人员数需输入正数");		
+		    isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(PERSON_OUTNUM)") ,"编外人员数不能为空！");	
+			var staffNum = obj.item("MODEL(BS_ORGANISE_BASE).STRING(STAFFNUM)").value;
+			var personNum = obj.item("MODEL(BS_ORGANISE_BASE).STRING(PERSON_OUTNUM)").value;
+			
+			/*if(staffNum!="" && staffNum!= null ){
+				if (parseInt(staffNum,10) < 2 || parseInt(staffNum,10) > 5000){
+					alert("在职人员数应该在2-5000之间!");
+					return false;
+				}				
+			}*/
+			if(parseInt(staffNum,10)!=parseInt(staffInNum,10)+parseInt(personNum,10) ){
+				alert("在职人员数应等于在编人员数与编外人员数之和");
+				return false;
+				}
+			
+		  
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(PERSON_OUTNUM)"),"编外人员数需输入正数");	   
+		    isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(OFFICE_NUM)") ,"科室数不能为空！");	
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(OFFICE_NUM)"),"科室数需输入正数");	
+		    isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(EXECUTIVE_NUM)") ,"行政职能科室不能为空！");	
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(EXECUTIVE_NUM)"),"行政职能科室数需输入正数");	
+		    isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(OPERATION_NUM)") ,"业务职能科室数不能为空！");	
+		    isFloat(obj.item("MODEL(BS_ORGANISE_BASE).STRING(OPERATION_NUM)"),"业务职能科室数需输入正数");
+		    var officeNum = obj.item("MODEL(BS_ORGANISE_BASE).STRING(OFFICE_NUM)").value;	
+			var executive = obj.item("MODEL(BS_ORGANISE_BASE).STRING(EXECUTIVE_NUM)").value;
+			var operation = obj.item("MODEL(BS_ORGANISE_BASE).STRING(OPERATION_NUM)").value;
+			if(officeNum!="" && officeNum!= null && executive!="" && executive!= null && operation!="" && operation!= null){
+				if (parseInt(officeNum,10) <(parseInt(executive,10)+ parseInt(operation,10)) || parseInt(officeNum,10) >(parseInt(executive,10)+ parseInt(operation,10))){
+					alert("行政职能科室与业务职能科室数之和应等于科室数!");
+					return false;
+				}				
+			}
+		
+		   // isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(EXECUTIVE)") ,"请选择行政职能与业务！");	
+			var a = document.getElementsByName("TOKENVAL(BS_ORGANISE_BASE_YWZNFW)");		
+			if(a[0].value==""||a[0].value==null){
+				alert("请选择本单位业务职能范围!");
+				return false;
+			};
+		    	   
+		  //  isNotEmpty(obj.item("MODEL(BS_ORGANISE_BASE).STRING(ORG_PROPERTY)") ,"请选择机构性质！");	
+
+		  
+		    return checkAll();
+			
+		}
+</script>
+</head>
+
+
+<body>
+
+	<html:form action="/edtOrgBaseAction.do"
+		onsubmit="return checkForm(this)">
+		<html:hidden property="act" />
+		<html:hidden property="MODEL(BS_ORGANISE_BASE).STRING(RECORDID)" />
+		<input type="hidden" name="currDate"
+			value="<%=cn.com.sinosoft.frame.utility.DateTimeUtils
+							.getNowStrDate()%>">
+
+		<frameHtml:busiId value="BS_ORGANISE_BASE" />
+		<frameApp:token />
+		<p align="center" class="tb_title">
+			<font size="4" face="宋体">疾控机构基本信息</font>
+		</p>
+		<table width="95%" border="1" cellspacing="1" cellpadding="2"
+			class="tbMain">
+			<%
+				int currYear = DateTimeUtils.getYear(new java.util.Date());
+
+						java.util.ArrayList yearList = new java.util.ArrayList();
+						for (int i=currYear-1;i>=2003;i--){
+							java.util.ArrayList vals = new java.util.ArrayList();
+							vals.add(Integer.toString(i));
+							vals.add(Integer.toString(i));
+							yearList.add(vals);
+						}
+			%>
+			<tr>
+				<td class="td_name">机构所属地区</td>
+				<td class="td_value" colspan="1">
+				<frameHtml:text
+						property="MODEL(BS_ORGANISE_BASE).STRING(ZONECODE)"
+						value="<%=ZONECODE%>" viewState="hidden" editState="hidden"
+						addState="hidden" /> 
+			    <frameHtml:text
+						property="MODEL(BS_ORGANISE_BASE).STRING(ORGCODE1)"
+						value="<%=ORGCODE%>" viewState="hidden" editState="hidden"
+						addState="hidden" /> <frameHtml:zone property="ctlZoneCode"
+						zoneTopLevel="userperm" zoneBottomLevel="county"
+						zoneDefault="user" zoneVisible="true"
+						zoneOnChange="javascript:advQuery2()" orgVisible="false"
+						orgTypeVisible="false" orgBehavior="orgChangeWithZone"
+						orgCaption="机构名称"
+						orgType="J100,H213,H214,H215,H216,H217,H218,H219"
+						zonePeer="document.all['MODEL(BS_ORGANISE_BASE).STRING(ZONECODE)']"
+						orgPeer="document.all['MODEL(BS_ORGANISE_BASE).STRING(ORGCODE1)']" />
+				</td>
+            </tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%">机构名称</td>
+				<td class="td_value" width="80%">
+				<%
+				if(pageState.trim().equals("view")){
+				%>
+				<text><%=ORGNAMEBY %></text>
+				
+				
+				<%}else{%>
+				<frameHtml:codeSelect styleId="userid"  onchange="javascript:advQuery(null)"
+					property="MODEL(BS_ORGANISE_BASE).STRING(ORGCODE)" 
+					code="BS_DIC_ORGCOD">
+					<option value="<%=ORGCODE %>" selected="selected"><%=ORGNAMEBY %></option>
+				</frameHtml:codeSelect>
+				<%} %>
+				</td>
+			</tr>
+
+
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>组织机构代码</td>
+				<td class="td_value" width="80%"><frameHtml:text
+						property="MODEL(BS_ORGANISE_BASE).STRING(ORG_NUM)" maxlength="50"
+						size="50" />&nbsp;</td>
+			</tr>
+
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>年度</td>
+				<td class="td_value" width="80%"><frameHtml:codeSelect
+				styleId="userid1" 
+						property="MODEL(BS_ORGANISE_BASE).STRING(YEARS)"
+						onchange="javascript:advQuery(this.value)"
+						optionList="<%=yearList%>"   editState="view" value="Integer.toString(currYear-1)">
+					
+					</frameHtml:codeSelect>
+			</tr>
+
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>编制数</td>
+				<td class="td_value" width="80%"><frameHtml:text
+						property="MODEL(BS_ORGANISE_BASE).STRING(PERSON_QUOTA)"
+						maxlength="8" size="16" />人</td>
+			</tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>在职人员数</td>
+				<td class="td_value" width="80%">
+					 
+				<% 
+				  
+				    if(pageState.trim().equals("view") || pageState.trim().equals("edit")){
+				 
+				%>
+					 <text><%=STAFFNUM %></text>人
+				<%}else{%>
+				<frameHtml:text 
+				styleId="zzry"
+			    onfocus="javascript:alert('由系统根据人员基本信息情况自动生成');  window.focus();"
+				property="MODEL(BS_ORGANISE_BASE).STRING(STAFFNUM)"
+				value="<%=STAFFNUM%>" 
+				maxlength="8" 
+				size="16" />
+				人 （含所有工作人员,在职人员数=在编人员数+编外人员数）
+				<%}%>
+				</td> 
+			</tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>在编人员数</td>
+				<td class="td_value" width="80%">
+				 
+				 <% 
+				   if(pageState.trim().equals("view") || pageState.trim().equals("edit")){
+				 %>
+				    <text><%=STAFFINNUM %></text>人
+				 <%}else{ %>
+				<frameHtml:text styleId="zbry" 
+					property="MODEL(BS_ORGANISE_BASE).STRING(STAFFINNUM)"
+				  onfocus="javascript:alert('由系统根据人员基本信息情况自动生成');  window.focus();"
+					value="<%=STAFFINNUM %>"
+					maxlength="8" 
+					size="16" />
+				人 
+				<% }%>
+				</td>
+			</tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>编外人员数</td>
+				<td class="td_value" width="80%">
+				 
+				 <% 
+				   if(pageState.trim().equals("view") || pageState.trim().equals("edit")){
+				 %>
+				    <text><%=PERSON_OUTNUM %></text>人
+				 <%}else{%>
+				<frameHtml:text 
+				    styleId="byry"
+				    onfocus="javascript:alert('由系统根据人员基本信息情况自动生成');  window.focus();"
+					property="MODEL(BS_ORGANISE_BASE).STRING(PERSON_OUTNUM)"
+					value="<%=PERSON_OUTNUM %>" 
+					maxlength="8" 
+					size="8" />
+				&nbsp;人 （含借调人员,聘用人员,退休返聘人员,劳务派遣人员）
+				<%}%>
+				</td>
+				 
+			</tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>科室数</td>
+				<td class="td_value" width="80%">
+				<% 
+				  if(pageState.trim().equals("view") || pageState.trim().equals("edit")){
+				%>
+				   <text><%=OFFICE_NUM%></text>个
+				<%}else{%>
+				<frameHtml:text
+				        styleId="kss"
+				        onfocus="javascript:alert('由系统根据科室维护信息自动生成'); window.focus();"
+						property="MODEL(BS_ORGANISE_BASE).STRING(OFFICE_NUM)"
+						value="<%=OFFICE_NUM%>"
+						maxlength="8" size="8" />个
+				<% }%>
+				</td>	
+			</tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>行政职能科室数</td>
+				<td class="td_value" width="80%">
+				<% 
+				 if(pageState.trim().equals("view") || pageState.trim().equals("edit")){
+				%>
+				  <text><%=EXECUTIVE_NUM %></text>个
+				<%}else{ %>
+				<frameHtml:text
+				        styleId="xzs"
+				        onfocus="javascript:alert('由系统根据科室维护信息自动生成'); window.focus();"
+						property="MODEL(BS_ORGANISE_BASE).STRING(EXECUTIVE_NUM)"
+						value="<%=EXECUTIVE_NUM%>"
+						maxlength="8" size="8" />个
+				<%}%>
+				</td>
+			</tr>
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>业务职能科室数</td>
+				<td class="td_value" width="80%">
+				<%
+                  if(pageState.trim().equals("view") || pageState.trim().equals("edit")){				
+				%>
+				   <text><%=OPERATION_NUM%></text>个
+				<%}else{%>
+				<frameHtml:text
+				        styleId="yws"
+				        onfocus="javascript:alert('由系统根据科室维护信息自动生成'); window.focus();"
+						property="MODEL(BS_ORGANISE_BASE).STRING(OPERATION_NUM)"
+						value="<%=OPERATION_NUM%>"
+						maxlength="8" size="8" />个
+				<%}%>
+			    </td>
+			</tr>
+
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>本单位业务职能范围</td>
+				<td class="td_value" width="80%"><frameHtml:dlgData
+						code="BS_DIC_YWZNFW" jsVarName="dlgDataCause" /> <frameHtml:multiSelDlg
+						property="TOKENVAL(BS_ORGANISE_BASE_YWZNFW)"
+						jsVarName="dlgDataCause" title="本单位业务职能范围" />
+			</tr>
+
+
+
+			<tr bordercolor="#C9C9C9">
+				<td class="td_name" width="20%"><font color="red">*</font>机构性质</td>
+				<td class="td_value" width="80%">
+					<%
+						boolean selectstate1 = false;
+								if ("view".equals(pageState))
+									selectstate1 = true;
+					%> <frameHtml:codeSelect
+						property="MODEL(BS_ORGANISE_BASE).STRING(ORG_PROPERTY)"
+						code="BS_DIC_ORG_PROPERTY" disabled="<%=selectstate1%>">
+					</frameHtml:codeSelect></td>
+			</tr>
+
+
+
+			<tr style="display:none">
+				<td class="td_name" colspan="1">录入人</td>
+				<td class="td_value"><frameHtml:text
+						property="MODEL(BS_ORGANISE_BASE).STRING(CREATE_PEOPLE)"
+						value="<%=userID%>" /></td>
+				<td class="td_name">录入日期</TD>
+				<td class="td_value"><frameHtml:dateCtl
+						property="MODEL(BS_ORGANISE_BASE).STRING(CREATE_DATE)" init="true" />
+				</td>
+			</tr>
+		</table>
+		<table width="95%" align="center">
+			<tr align="center">
+				<td align="center">
+					<%
+						if ("edit".equals(pageState)) {
+					%> <input type="submit" value="更 新"
+					onclick="this.form.act.value='editParentSubmit'"> <%
+ 	} else if ("edit".equals(pageState)) {
+ %>
+					<input type="submit" value="添 加"
+					onclick="this.form.act.value='editParentSubmit'"> <%
+ 	}
+ %> <input
+					type="button" value="返 回" onclick="back(document.forms[0])">
+				</td>
+			</tr>
+		</table>
+	</html:form>
+	<script  defer="defer">
+advQuery(null);
+</script>
+</body>
+
+</html:html>

@@ -1,0 +1,39 @@
+package com.tz.util;
+
+import java.net.URL;
+
+
+
+	
+/**
+ *@author zpy
+ *@description
+ *网页下载图片工具类
+ *@data 2018年4月1日
+ */
+
+public class TmDownImgUtil {
+
+	/**
+	 *@author zpy
+	 *@description 根据网址获取网页源代码
+	 *@data 2018年4月1日
+	 *@param link 目标网址
+	 *@param encoding 网站的编码
+	 */
+	public static String htmlSpurce(String link,String encoding){
+		//获取网路对象
+		URL url =new URL();
+		
+		
+		
+		
+		
+		
+		return "";
+	}
+	
+	
+	
+	
+}

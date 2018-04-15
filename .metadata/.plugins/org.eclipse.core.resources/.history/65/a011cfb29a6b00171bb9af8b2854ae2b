@@ -1,0 +1,51 @@
+package servlet;
+
+
+public class ListContraller {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String filePath = "D:\\Template";
+		String fileName = "compiler.txt";
+		del(filePath, fileName);
+
+		}
+
+		public static void del(String filePath, String fileName) {
+
+		int lineDel = 1;
+		RandomAccessFile readFile = null;
+		try {
+		readFile =new RandomAccessFile(filePath + "\\" + fileName,"r");
+		readFile.readLine();
+		} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return;
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return;
+		}
+		RandomAccessFile writeFile = null;
+		try {
+		writeFile = new RandomAccessFile(filePath
+		+fileName,"rw");
+		String tempLine = null;
+		while((tempLine=readFile.readLine()) != null){
+		writeFile.writeBytes(tempLine);
+		writeFile.writeBytes("\n");
+		}
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		try {
+		readFile.close();
+		writeFile.close();
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		}
+		}
+	

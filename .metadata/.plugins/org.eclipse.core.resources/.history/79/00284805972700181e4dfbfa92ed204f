@@ -1,0 +1,6 @@
+package test;
+
+public class Bus {
+	private int carry;//载客量 public Bus(String name,int carry,float rent){ this.name=name; this.carry=carry; this.rent=rent; } public float getCarry() { return carry; } @Override public String toString() { return name+"\t"+ rent + "元/天\t"+carry+"人\t"; }
+	
+}

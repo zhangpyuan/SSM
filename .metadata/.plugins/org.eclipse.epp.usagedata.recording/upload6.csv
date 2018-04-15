@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.mylyn.context.ui,3.2.3.v20100217-0100-e3x,"org.eclipse.mylyn.context.ui",1522651022624
+started,bundle,org.eclipse.mylyn.tasks.ui,3.2.3.v20100217-0100-e3x,"org.eclipse.mylyn.tasks.ui",1522651022675
+started,bundle,org.eclipse.mylyn.team.ui,3.2.3.v20100217-0100-e3x,"org.eclipse.mylyn.team.ui",1522651022676
+started,bundle,org.maven.ide.eclipse,0.12.1.20110112-1712,"org.maven.ide.eclipse",1522651022676
+started,bundle,org.maven.ide.eclipse.jdt,0.12.1.20110112-1712,"org.maven.ide.eclipse.jdt",1522651022676
+started,bundle,org.maven.ide.eclipse.maven_model_edit,0.12.1.20110112-1712,"org.maven.ide.eclipse.maven_model_edit",1522651022677
+os,sysinfo,,,"win32",1522651022680
+arch,sysinfo,,,"x86",1522651022680
+ws,sysinfo,,,"win32",1522651022680
+locale,sysinfo,,,"zh_CN",1522651022680
+processors,sysinfo,,,"2",1522651022680
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1522651022680
+java.runtime.version,sysinfo,,,"1.8.0_91-b14",1522651022680
+java.specification.name,sysinfo,,,"Java Platform API Specification",1522651022680
+java.specification.vendor,sysinfo,,,"Oracle Corporation",1522651022680
+java.specification.version,sysinfo,,,"1.8",1522651022680
+java.vendor,sysinfo,,,"Oracle Corporation",1522651022680
+java.version,sysinfo,,,"1.8.0_91",1522651022680
+java.vm.info,sysinfo,,,"mixed mode",1522651022680
+java.vm.name,sysinfo,,,"Java HotSpot(TM) Client VM",1522651022680
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1522651022680
+java.vm.specification.vendor,sysinfo,,,"Oracle Corporation",1522651022680
+java.vm.specification.version,sysinfo,,,"1.8",1522651022680
+java.vm.vendor,sysinfo,,,"Oracle Corporation",1522651022680
+java.vm.version,sysinfo,,,"25.91-b14",1522651022680

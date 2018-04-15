@@ -1,0 +1,8 @@
+package test;
+
+public class Pika {
+	private float load; //载重量 
+	private int carry; //载客量 
+	public Pika(String name,float load,int carry,float rent){ this.name=name; this.load=load; this.carry=carry; this.rent=rent; } public float getLoad() { return load; } public float getCarry() { return carry; } @Override public String toString() { return name+"\t"+rent+"元/天\t"+load+"吨 "+carry+"人\t"; } 
+	
+}

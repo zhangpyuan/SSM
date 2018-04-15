@@ -1,0 +1,40 @@
+package test;
+
+public class Car {
+
+	//车名
+	String carname;
+	//车数量
+	int carnumber;
+	//价格
+	int carprice;
+	//载货量
+	int carweight;
+	public String getCarname() {
+		return carname;
+	}
+	public void setCarname(String carname) {
+		this.carname = carname;
+	}
+	public int getCarnumber() {
+		return carnumber;
+	}
+	public void setCarnumber(int carnumber) {
+		this.carnumber = carnumber;
+	}
+	public int getCarprice() {
+		return carprice;
+	}
+	public void setCarprice(int carprice) {
+		this.carprice = carprice;
+	}
+	public int getCarweight() {
+		return carweight;
+	}
+	public void setCarweight(int carweight) {
+		this.carweight = carweight;
+	}
+	
+	
+	
+}

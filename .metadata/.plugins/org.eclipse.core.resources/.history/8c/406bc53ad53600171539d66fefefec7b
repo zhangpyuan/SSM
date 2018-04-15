@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app id="WebApp">
+	<display-name>BIS</display-name>
+	
+		<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>cn.com.sinosoft.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>GBK</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
+	<servlet id="servlet_action">
+		<servlet-name>action</servlet-name>
+		<servlet-class> cn.com.sinosoft.frame.action.FrameActionServlet		</servlet-class>
+		<init-param id="InitParam_2">
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_3">
+			<param-name>config/cachemgr</param-name>
+			<param-value> /WEB-INF/struts-cachemgr-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_4">
+			<param-name>config/plague</param-name>
+			<param-value>/WEB-INF/struts-plague-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_5">
+			<param-name>mapping</param-name>
+			<param-value> cn.com.sinosoft.frame.action.FrameActionMapping			</param-value>
+		</init-param>
+		<init-param id="InitParam_6">
+			<param-name>config/systemmgr</param-name>
+			<param-value>/WEB-INF/struts-sysmgr-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_7">
+			<param-name>config/phthisis</param-name>
+			<param-value> /WEB-INF/struts-phthisis-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_8">
+			<param-name>config/psq</param-name>
+			<param-value>/WEB-INF/struts-psq-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_9">
+			<param-name>config/busicustom</param-name>
+			<param-value>
+				/WEB-INF/struts-cus-config.xml,/WEB-INF/struts-infcus-config.xml,/WEB-INF/struts-eventcus-config.xml,/WEB-INF/struts-colcus-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_10">
+			<param-name>config/infection</param-name>
+			<param-value> /WEB-INF/struts-infection-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_11">
+			<param-name>config/emergency</param-name>
+			<param-value> /WEB-INF/struts-emergency-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_12">
+			<param-name>config/aids</param-name>
+			<param-value>/WEB-INF/struts-aids-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_13">
+			<param-name>config/leechdom</param-name>
+			<param-value> /WEB-INF/struts-leechdom-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_14">
+			<param-name>config/report</param-name>
+			<param-value>/WEB-INF/struts-report-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_15">
+			<param-name>config/codetrans</param-name>
+			<param-value> /WEB-INF/struts-codetrans-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_16">
+			<param-name>config/inspect</param-name>
+			<param-value> /WEB-INF/struts-inspect-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_17">
+			<param-name>config/alarm</param-name>
+			<param-value>/WEB-INF/struts-alarm-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_18">
+			<param-name>config/flu</param-name>
+			<param-value>/WEB-INF/struts-flu-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_19">
+			<param-name>config/disaster</param-name>
+			<param-value> /WEB-INF/struts-disaster-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_20">
+			<param-name>config/drs</param-name>
+			<param-value>/WEB-INF/struts-drs-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_21">
+			<param-name>config/ms</param-name>
+			<param-value>/WEB-INF/struts-ms-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_22">
+			<param-name>config/immu</param-name>
+			<param-value>/WEB-INF/struts-immu-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_25">
+			<param-name>config/deathrs</param-name>
+			<param-value> /WEB-INF/struts-deathrs-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_23">
+			<param-name>config/serviceability</param-name>
+			<param-value> /WEB-INF/struts-serviceability-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_24">
+			<param-name>config/infevent</param-name>
+			<param-value>
+				/WEB-INF/struts-infevent-config.xml,/WEB-INF/struts-monitor-config.xml,/WEB-INF/struts-infques-config.xml			</param-value>
+		</init-param>
+		<init-param id="InitParam_26">
+			<param-name>config/heat</param-name>
+			<param-value>/WEB-INF/struts-heat-config.xml</param-value>
+		</init-param>
+		<init-param id="InitParam_1206647966494">
+			<param-name>debug</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param id="InitParam_1206647966495">
+			<param-name>detail</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param id="InitParam_1206647966496">
+			<param-name>validating</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>-1</load-on-startup>
+	</servlet>
+	<servlet id="servlet_expData">
+		<servlet-name>expData</servlet-name>
+		<servlet-class> com.caucho.hessian.server.HessianServlet		</servlet-class>
+		<init-param id="InitParam_1206647966497">
+			<param-name>service-class</param-name>
+			<param-value> cn.com.sinosoft.cdc.hessian.ExpDataService			</param-value>
+		</init-param>
+		<init-param id="InitParam_1206647966498">
+			<param-name>api-class</param-name>
+			<param-value> cn.com.sinosoft.cdc.hessian.ExpDataApi			</param-value>
+		</init-param>
+	</servlet>
+	<servlet id="servlet_expData_funcTreeBuilder">
+		<servlet-name>funcTreeBuilder</servlet-name>
+		<servlet-class>test.FuncTreeBuilder</servlet-class>
+	</servlet>
+	<servlet id="servlet_expData_dwrServlet">
+		<servlet-name>dwrServlet</servlet-name>
+		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+		<init-param id="InitParam_1206647966500">
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping id="servlet_action_mapping">
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping id="servlet_expData_mapping">
+		<servlet-name>expData</servlet-name>
+		<url-pattern>/expData</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping id="servlet_expData_funcTreeBuilder_mapping">
+		<servlet-name>funcTreeBuilder</servlet-name>
+		<url-pattern>/FuncTreeBuilder</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping id="servlet_expData_dwrServlet_mapping">
+		<servlet-name>dwrServlet</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	<taglib id="TagLibRef_7">
+		<taglib-uri>/WEB-INF/frame-app.tld</taglib-uri>
+		<taglib-location>/WEB-INF/frame-app.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_8">
+		<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_9">
+		<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_10">
+		<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_1206647966498">
+		<taglib-uri>/WEB-INF/sinosoft-weaf.tld</taglib-uri>
+		<taglib-location>/WEB-INF/sinosoft-weaf.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_1206647966499">
+		<taglib-uri>/WEB-INF/frame-html.tld</taglib-uri>
+		<taglib-location>/WEB-INF/frame-html.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_1206647966500">
+		<taglib-uri>/WEB-INF/struts-template.tld</taglib-uri>
+		<taglib-location>/WEB-INF/struts-template.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_1206647966501">
+		<taglib-uri>/WEB-INF/permission-func.tld</taglib-uri>
+		<taglib-location>/WEB-INF/permission-func.tld</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_1206647966502">
+		<taglib-uri>/WEB-INF/plague-statdisplayrsv.tld</taglib-uri>
+		<taglib-location> /WEB-INF/plague-stat-displayrsv.tld		</taglib-location>
+	</taglib>
+	<taglib id="TagLibRef_1206647966503">
+		<taglib-uri>/WEB-INF/frame-death-html.tld</taglib-uri>
+		<taglib-location>/WEB-INF/frame-death-html.tld</taglib-location>
+	</taglib>
+	<resource-ref id="ResourceRef_1284030924899">
+		<res-ref-name>BIS</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	<listener>
+
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+
+	</listener>
+
+	<filter>
+
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+
+	</filter>
+	<filter>
+		<filter-name>CAS Filter</filter-name>
+		<filter-class>edu.yale.its.tp.cas.client.filter.CASFilter</filter-class>
+		<init-param>
+			<param-name>edu.yale.its.tp.cas.client.filter.loginUrl</param-name>
+			<param-value>http://10.248.4.55:9081/UVSSERVER/login</param-value>
+		</init-param>
+		<init-param>
+			<param-name>edu.yale.its.tp.cas.client.filter.validateUrl</param-name>
+			<param-value>http://10.248.4.55:9081/UVSSERVER/serviceValidate</param-value>
+		</init-param>
+		<init-param>
+			<param-name>edu.yale.its.tp.cas.client.filter.serverName</param-name>
+			<param-value>10.248.4.55:9081</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CAS Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>loggerfilter</filter-name>
+		<filter-class>cn.com.sinosoft.filter.LoggerFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loggerfilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<filter> 
+	    <filter-name>SqlInFilter</filter-name> 
+	    <filter-class>cn.com.sinosoft.filter.ParamsInjectionfilter</filter-class> 
+	</filter> 
+	
+	<filter-mapping> 
+	    <filter-name>SqlInFilter</filter-name> 
+	    <url-pattern>/*</url-pattern> 
+	</filter-mapping>
+</web-app>

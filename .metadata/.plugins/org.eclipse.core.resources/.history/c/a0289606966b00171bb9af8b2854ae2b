@@ -1,0 +1,24 @@
+package servlet;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ListContraller {
+
+	String filePath = WebplusContext.getServletContext().getRealPath("/apps/schoolfellow/upload/emailRecord/emailRecord.txt"); 
+	try { 
+	FileOutputStream out = new FileOutputStream(filePath,false); 
+	out.write(new String("").getBytes()); 
+	out.close(); 
+	script = "alert('清空发送邮件日志成功！');"; 
+	} catch (Exception ex) { 
+	script = "alert('清空文件的内容失败,因为没有发送邮件日志文件！');"; 
+	} 
+	} 

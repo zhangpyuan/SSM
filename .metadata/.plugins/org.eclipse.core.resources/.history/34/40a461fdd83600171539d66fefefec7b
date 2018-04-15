@@ -1,0 +1,424 @@
+<%@ page contentType="text/html;charset=GBK" language="java" %>
+<%@ page import="cn.com.sinosoft.frame.utility.GetFieldValue" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/frame-app.tld" prefix="frameApp" %>
+<%@ taglib uri="/WEB-INF/frame-html.tld" prefix="frameHtml" %>
+<%@ taglib uri="/WEB-INF/bs-html.tld" prefix="bsHtml" %>
+<%@ taglib uri="/WEB-INF/sinosoft-weaf.tld" prefix="component" %>
+<%@ page import="cn.com.sinosoft.frame.constant.FrameConstant"%>
+<%@ page import="cn.com.sinosoft.frame.utility.DateTimeUtils"%>
+<%@ page import="com.uncnet.framework.utils.permission"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="cn.com.sinosoft.frame.utility.GetFieldValue" %>
+<%@ page import="cn.com.sinosoft.frame.busicustom.utility.BusiCustomHelper"%>
+
+<html:html>
+<head>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<LINK href="<%=request.getContextPath()%>/css/listCss.css" type=text/css rel=stylesheet>
+<LINK href="<%=request.getContextPath()%>/css/default_style.css" type=text/css rel=stylesheet>
+<script language="javascript" src="<%=request.getContextPath()%>/js/serviceability.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/js/frameTag.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/dwr/util.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/dwr/engine.js"></script>
+<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/ImportPerson.js'></script>
+
+</head>
+<script language="javascript">
+
+function importSubmit(obj)
+   {
+	 if(document.all['QUERY(ORGCODE)'].value=='')
+		{
+			alert("请先选择机构名称!");
+			return;
+		}
+		var orgCode=document.all["QUERY(ORGCODE)"].value;
+	   var cYear = new Date().getYear()-1; 
+	   if(confirm("你确定要覆盖"+cYear+"年的数据?此功能将覆盖本机构"+cYear+"年已有的全部数")) {
+		   ImportPerson.delDeviceDate(orgCode ,function(data){
+			   obj.form.action = "<%=request.getContextPath()%>/serviceability/PeopelInforImp.do";
+		   		obj.form.act.value = "noQuery";
+		   		obj.form.submit();
+				 });		  
+}
+   }
+
+function importSubmitAdd(obj){
+	if(document.all['QUERY(ORGCODE)'].value=='')
+	{
+		alert("请先选择机构名称!");
+		return;
+	}
+	   var cYear = new Date().getYear()-1; 
+	   if(confirm("您选择的为增量添加数据,不会覆盖系统中本机构"+cYear+"年原有数据")) { 
+		   obj.form.action = "<%=request.getContextPath()%>/serviceability/PeopelInforImp.do";
+	   		obj.form.act.value = "noQuery";
+	   		obj.form.submit();
+			
+	   		 }
+	   }
+   function addSubmit(obj){
+    if(document.all['QUERY(ORGCODE)'].value=='')
+		{
+			alert("请先选择具体的机构名称!");return;
+		}
+   	obj.form.action="<%=request.getContextPath()%>/serviceability/edtPersonAction.do?advFlag=0";
+	obj.form.act.value="addParentInput";
+	obj.form.submit();
+   }
+   function editSubmit(formObj,idVal){
+   	formObj.action="<%=request.getContextPath()%>/serviceability/edtPersonAction.do?advFlag=0";
+	formObj.key_ID.value=idVal;
+	formObj.act.value="editParentInput";
+	formObj.submit();
+   }
+   function delSubmit(formObj,idVal){
+   	if (window.confirm("确定要删除吗？")==false)
+   		return;
+   	formObj.action="<%=request.getContextPath()%>/serviceability/edtPersonAction.do?advFlag=0";
+	formObj.act.value="delParentSubmit";
+	formObj.key_ID.value=idVal;
+	formObj.submit();
+   }
+   
+   
+   function querySubmit(obj){
+    if(document.all['QUERY(ORGCODE)'].value=='')
+		{
+			alert("请选择机构名称!");return;
+		}
+    obj.form.act.value="queryParent";
+	obj.form.submit();
+   }
+   
+   function advQuery(){
+		window.location="<%=request.getContextPath()%>/serviceability/qryAdvPersonAction.do?year=2012&nb=1&act=noQuery";
+   }
+   
+   function viewSubmit(formObj,idVal){
+   	formObj.action="<%=request.getContextPath()%>/serviceability/edtPersonAction.do?advFlag=0";
+	formObj.key_ID.value=idVal;
+	formObj.act.value="viewParent";
+	formObj.submit();
+   }
+	
+   function importSubmitHis(){
+		
+	    if(document.all['QUERY(ORGCODE)'].value=='')
+			{
+				alert("请先选择机构名称!");return;
+			}
+			else if(document.all['QUERY(YEARS)'].value=='')
+			{
+				alert("请先选择年度!");return;
+			}	
+
+	        var iWidth=400; 
+	        var iHeight=100; 
+	        var iTop = (window.screen.availHeight-30-iHeight)/2; 
+	        var iLeft = (window.screen.availWidth-10-iWidth)/2; 
+		
+	          var strFeatures="height="+iHeight+", width="+iWidth+", top="+iTop+", left="+iLeft;
+	   		//var strFeatures="width=600px;height=50px;center=yes;middle=yes;help=no;status=no;scroll=no;outerHeight=50px"; 
+			var url = "<%=request.getContextPath()%>/serviceability/qryPersonInfoImportMrg.do?linage=0&QUERY(ORGCODE)="
+				+document.all["QUERY(ORGCODE)"].value
+	  		    +"&QUERY(ZONECODE)="+document.all["QUERY(ZONECODE)"].value
+				+"&QUERY(DIST_YEARS)="+document.all["QUERY(YEARS)"].value
+				+"&QUERY(DIST_ORGCODE)="+document.all["QUERY(ORGCODE)"].value
+				+"&act=noQuery&busiId=BS_PERSON_BASEINFO";
+				
+				var oZone = document.all.ctlZoneCode_commZoneCode;
+				var oOrg =  document.all.ctlZoneCode_orglist;
+				
+				var zoneName = "";
+				var orgName="";
+				
+				for(var i=0;i<oZone.options.length;i++){
+				   if(oZone.options[i].value==oZone.value){
+				       zoneName = oZone.options[i].text;
+				       break;
+				   }
+				}
+				if(oZone.value=="00000000"){
+				   zoneName = zoneName.substring(3,zoneName.length-3);
+				}else{
+				   zoneName = zoneName.substring(zoneName.indexOf("-")+2);
+				}
+			    
+				for(var i=0;i<oOrg.options.length;i++){
+				   if(oOrg.options[i].value==oOrg.value){
+				       orgName = oOrg.options[i].text;
+				       break;
+				   }
+				}	
+				url +="&QUERY(ORGNAME)="+orgName+"&QUERY(ZONENAME)="+zoneName;
+			  window.open(url,'导入管理',strFeatures);
+	   }
+
+   
+   function checkForm(formObj){
+	 if(formObj['QUERY(ORGCODE)'].value=='')
+		{
+			alert("请执行查询后再导出!");
+			return false;
+		}
+		return true;	
+	}
+	//导出本级
+   function exportExcelNew(formObj){  
+	if(checkForm(formObj)){
+   	var action = formObj.action;
+		var target = formObj.target;   
+		formObj.action="<%=request.getContextPath()%>/serviceability/PersonOutlayExcelNew.do?linage=0";
+	    formObj.act.value="queryParent";
+	    formObj.busiId.value = "BS_PERSON_BASEINFO";
+		formObj.target="excelFrame";	  
+		formObj.submit();
+		formObj.action = action;
+		formObj.target = target;
+	}	 		
+  }
+	//导出本级及以下
+   function exportUnderExcel(formObj){     
+   	//	var action = formObj.action;
+	//	var target = formObj.target;
+	//	var zonecode=document.all["QUERY(ZONECODE)"].value;
+	// 	formObj.action="<%=request.getContextPath()%>/serviceability/PersonOutlayExcelNew.do?linage=0&QUERY(ORGCODE)="+zonecode;
+	 // formObj.act.value="queryParent";
+	 // formObj.busiId.value = "BS_PERSON_BASEINFO_ALL";
+	//	formObj.target="excelFrame";	  
+	//	formObj.submit();	 
+	//	formObj.action = action;
+	//	formObj.target = target;	
+
+	
+		var action = formObj.action;
+		var target = formObj.target;
+		formObj.action="<%=request.getContextPath()%>/serviceability/PersonOutlayExcelUnder.do?linage=0";  
+	   formObj.act.value="queryParent";
+		formObj.target="excelFrame";	  
+		formObj.submit();	 
+		formObj.action = action;
+		formObj.target = target; 
+	
+		 
+
+  }  
+	/**模板下载***/
+	function downLoadSubmit(formObj){
+     //    window.excelFrame.location= "<%=request.getContextPath()%>/serviceability/help/peopleTemplate.rar";
+   window.location.href="<%=request.getContextPath()%>/serviceability/help/peopleTemplate.zip";
+	}
+
+
+	//导入上年的历史记录，并返回导入的条数
+    function importHisSubmit(obj){
+        //必须选择机构
+        
+        var myDate = new Date();
+        var cYear = new Date().getYear()-1; 
+        var news="你确定要覆盖已有的"+cYear+"年数据吗？";
+
+  	  if(document.all['QUERY(ORGCODE)'].value=='')
+  		{
+  			alert("请先选择机构名称!");return;
+  		}
+  	  var orgCode=document.all["QUERY(ORGCODE)"].value;
+  	     ImportPerson.checkDeviceDate(orgCode ,function(data){
+ 			 if (data!=null && data>0){
+ 				 if (confirm(news)){ 			 				 
+ 				    ImportPerson.delDeviceDate(orgCode ,function(data){
+ 				    	 ImportPerson.impCheckDate(orgCode,function(data){
+ 				    ImportPerson.checkDeviceDate(orgCode ,function(data){
+ 	                        alert("成功导入"+data+"条");
+ 	                        var obj=document.getElementById("exp");
+ 	                		obj.disabled=true;
+ 							 });
+ 						 });
+ 				   }); 
+ 	 				 }
+ 				 }else{
+ 					ImportPerson.delDeviceDate(orgCode ,function(data){
+				    	 ImportPerson.impCheckDate(orgCode,function(data){
+				    ImportPerson.checkDeviceDate(orgCode ,function(data){
+	                        alert("成功导入"+data+"条");
+	                        var obj=document.getElementById("exp");
+	                		obj.disabled=true;
+							 });
+						 });
+				   }); 
+ 					 }
+ 			 });
+    }  
+</script>
+
+<body>
+<html:form action="/qryPersonAction.do">
+<%
+	permission user = (permission)session.getAttribute(FrameConstant.SESSION_USER_VIEW);
+	String userZoneCode = user.getUserzonecode();
+	String userName=user.getAccountname();
+	String open_close_flag=(String)request.getAttribute("open_close_flag");
+	String zonecode=(String)request.getAttribute("zonecode");s
+	boolean open_close=false;
+	
+	if(open_close_flag.equals("1")&&(zonecode.equals("00000000")||userZoneCode.substring(0,2).equals(zonecode.substring(0,2)))){//启用开放
+		open_close=true;
+	}
+	
+%>
+	<html:hidden property="act"/>
+	
+	<frameHtml:busiId value="BS_PERSON_BASEINFO"/>
+
+	<input type="hidden" name="key_ID"/>
+	<table width="95%" border="1" cellspacing="1" cellpadding="2" class="tbSub">
+	
+		<colgroup>
+			<col align="left" style="width:20%">
+			<col align="left" style="width:30%">
+			<col align="left" style="width:20%">
+			<col align="left" style="width:30%">			
+		</colgroup>
+		<tr style="display:none">
+			<td colspan="4">
+	  	       <frameHtml:text property="QUERY(ZONECODE)"/>
+	  	       <frameHtml:text property="QUERY(ORGCODE)"/>
+			</td>
+		</tr>
+		<tr>
+    	   <td class="td_value" colspan="4">
+ 				<frameHtml:zone 
+				   property="ctlZoneCode" 
+				   zoneTopLevel="userperm" 
+				   zoneBottomLevel="county" 
+				   zoneDefault="user" 
+				   zoneVisible="true" 
+				   zoneOnChange=""
+				   orgVisible="true" 
+				   orgTypeVisible="false" 
+				   orgBehavior="orgChangeWithZone" 
+				   orgCaption="机构名称"
+				   orgType="J100,H213,H214,H215,H216,H217,H218,H219"
+				   zonePeer="document.all['QUERY(ZONECODE)']"
+				   orgPeer ="document.all['QUERY(ORGCODE)']"
+			 	/>
+    	   </td>
+   	 	</tr>
+		 	
+		<%
+		int currYear = DateTimeUtils.getYear(new java.util.Date());
+   	 	ArrayList yearList = new ArrayList();
+   	    for (int i=currYear-1;i>=2003;i--){
+   	 		ArrayList vals = new ArrayList();
+   	 		vals.add(Integer.toString(i));
+   	 		vals.add(Integer.toString(i));
+   	 		yearList.add(vals);
+   	 	}
+   	 	%>
+   	 	<tr>
+    	   <td align=left width="7%" >选择年度</td>
+    	   <td>
+               <frameHtml:codeSelect  property="QUERY(YEARS)" optionList="<%=yearList%>" value="<%=Integer.toString(currYear-1)%>">
+           	        <option value="">请选择...</option>
+           	   </frameHtml:codeSelect> 
+    	   	</td>   	  
+    	</tr> 
+	</table>
+
+	<table width="95%" class="tbSub">
+		<tr>
+			<td class="tbSub_title">疾控机构人员基本情况</td>
+			<td class="tbSub_button">
+				      <%--if (userZoneCode.substring(0,2).equals("61")) {--%>
+				     <input type="button" value="导入历史记录" onclick="importHisSubmit(this)" id="exp"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				      <%--}--%>
+				     <input type="button" value="查询" onclick="querySubmit(this)"/>&nbsp;&nbsp;
+				     <input type="button" value="高级查询" onclick="advQuery()">&nbsp;&nbsp;
+				     <%--if (userZoneCode.substring(0,2).equals("61")) {--%>
+				     <input type="button" value="添加" onclick="addSubmit(this)"/>
+				      <%--}--%>
+			</td>
+		</tr>
+	</table>
+	 <table width="95%" border="1" cellspacing="1" cellpadding="2" class="tbMain">
+        <tr bordercolor="#C9C9C9" class="tbMain_title">
+	        <td align=center width="5%">序号</td>
+			<frameApp:listTitle/>
+			<td align=center width="30%" nowrap>操作</td>
+          </tr>
+	      <frameApp:frameIterate property="paginationMgr" rowNo="rowNo" indexId="indexId" scope="session">
+	      <tr bordercolor="#C9C9C9" class="tbMain_data">
+			<td align="center" nowrap>
+            	<bean:write name="rowNo"/>
+            </td>	
+            <%
+              //下面的方法必须在<frameApp:frameIterate>内使用
+              String id =GetFieldValue.getFieldValue(pageContext,"ID");
+              String years =GetFieldValue.getFieldValue(pageContext,"YEARS");
+              
+             /* Boolean hisEdtFlag=false;
+          	  if("zouy".equals(userName)||"softdev".equals(userName)||Integer.parseInt(years)>=(currYear-1)){
+          		hisEdtFlag=true;
+              }*/
+            %>
+            
+            <frameApp:listValue/>
+            <td align=center  nowrap>
+            <%if(years.equals((currYear-1)+"")){ %>
+              <a href="javascript:editSubmit(this.document.forms[0],'<%=id%>')">修改</a>
+            <%} %>
+            	<a href="javascript:viewSubmit(this.document.forms[0],'<%=id%>')">查看</a>
+            <%if(years.equals((currYear-1)+"")){ %>
+              <a href="javascript:delSubmit(this.document.forms[0],'<%=id%>')">删除</a>
+            <%} %>
+            </td>
+          </tr>
+         </frameApp:frameIterate>
+        </table>
+        <table width="95%">
+    	  <tr>
+    	    <td>
+	       <frameApp:pagination forward="b_01_FY0000"/>
+	    </td>
+          </tr>
+          <TR>
+			<TD >
+			  <%
+			    permission userView = (permission)request.getSession().getAttribute(FrameConstant.SESSION_USER_VIEW);
+			    String zo=userView.getUserzonecode();
+			    String strzonecode=zo.substring(4,8);
+			    if(strzonecode.equals("0000")){
+			  %>
+			  
+			  <%--if (userZoneCode.substring(0,2).equals("61")) {--%>
+		     <input type="button" value="覆盖导入Excel" onclick="importSubmit(this)"/>
+			   <input type="button" value="增量导入Excel" onclick="importSubmitAdd(this)"/>
+			   <%--}--%>
+			 
+				<%} %>
+			  <IFRAME name="excelFrame" id="excelFrame" width="0" height="0"></IFRAME>
+			  <input type="button"  value="导出本级" onclick="exportExcelNew(this.form)">
+			   <%
+			    //permission userView = (permission)request.getSession().getAttribute(FrameConstant.SESSION_USER_VIEW);
+			   // String zo=userView.getUserzonecode();
+			    //String strzonecode=zo.substring(4,8);
+			    if(strzonecode.equals("0000")){
+			  %>
+			  <input type="button"  value="导出本级及以下" onclick="exportUnderExcel(this.form)">
+				<%
+			    }
+			  %>
+			
+			<input type="button" value="模板下载" onclick="downLoadSubmit(this.form)"/>
+			</TD>
+		</TR>
+       </table>
+   </html:form>
+</body>
+</html:html>

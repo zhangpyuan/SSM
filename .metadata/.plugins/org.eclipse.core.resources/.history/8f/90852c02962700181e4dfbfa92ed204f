@@ -1,0 +1,16 @@
+package test;
+
+public class Car {
+
+	//车名
+	String carname;
+	//车数量
+	int carnumber;
+	//价格
+	int carprice;
+	//载货量
+	int carweight;
+	
+	
+	
+}

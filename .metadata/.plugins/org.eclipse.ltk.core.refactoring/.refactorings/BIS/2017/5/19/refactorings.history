@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;BIS/WebContent/WEB-INF/lib/frw.src&apos; to &apos;frw_bak.src&apos;" description="Rename resource &apos;frw.src&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/WEB-INF/lib/frw.src" name="frw_bak.src" stamp="1494550717912" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;BIS/WebContent/WEB-INF/lib本地&apos; to &apos;lib&apos;" description="Rename resource &apos;lib本地&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/WEB-INF/lib本地" name="lib" stamp="1494554436944" updateReferences="true"/>
+</session>

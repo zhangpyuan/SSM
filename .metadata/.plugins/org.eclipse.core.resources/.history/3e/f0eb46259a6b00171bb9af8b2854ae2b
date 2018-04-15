@@ -1,0 +1,71 @@
+package servlet;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ListContraller {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String filePath = "D:\\";
+		String fileName = "array.txt";
+		del(filePath, fileName);
+
+		}
+
+		public static void del(String filePath, String fileName) {
+
+		int lineDel = 1;
+		RandomAccessFile readFile = null;
+		try {
+		readFile =new RandomAccessFile(filePath + "\\" + fileName,"r");
+		readFile.readLine();
+		} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return;
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return;
+		}
+		RandomAccessFile writeFile = null;
+		try {
+		writeFile = new RandomAccessFile(filePath
+		+ "\\tempInitFile\\" + fileName,"rw");
+		String tempLine = null;
+		while((tempLine=readFile.readLine()) != null){
+		writeFile.writeBytes(tempLine);
+		writeFile.writeBytes("\n");
+		}
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		try {
+		readFile.close();
+		writeFile.close();
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		}
+		}
+	

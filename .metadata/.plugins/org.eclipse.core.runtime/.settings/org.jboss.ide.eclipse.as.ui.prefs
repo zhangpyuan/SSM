@@ -1,0 +1,5 @@
+#Mon Apr 02 14:41:25 CST 2018
+org.jboss.ide.eclipse.as.ui.defaultWebServer=easyui
+eclipse.preferences.version=1
+org.jboss.ide.eclipse.as.ui.preferences.enabledDecorators.1=true
+org.jboss.ide.eclipse.as.ui.preferences.disabled.automatic.server.view=true

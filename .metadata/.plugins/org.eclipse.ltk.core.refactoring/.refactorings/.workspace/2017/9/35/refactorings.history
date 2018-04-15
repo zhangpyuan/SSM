@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;weibo4j-oauth2&apos;" deleteContents="false" description="Delete resource &apos;weibo4j-oauth2&apos;" element1="/weibo4j-oauth2" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1504249467079"/>&#x0A;<refactoring comment="Delete resource &apos;www-generalize&apos;" deleteContents="false" description="Delete resource &apos;www-generalize&apos;" element1="/www-generalize" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1504249550387"/>
+</session>

@@ -1,0 +1,145 @@
+package servlet;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ListContraller {
+
+	public static String getSuiJiShu(String wlbm) {
+		String sjs = null;
+		try {
+
+			File file = new File("c:\\txm");// 创建C:/txm文件夹
+			if (!file.exists()) {
+				file.mkdir();
+			}
+			File fl = new File("c:\\txm\\" + wlbm + ".txt");
+
+			if (!fl.exists()) {
+				try {
+					fl.createNewFile();
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+			FileInputStream src = new FileInputStream("c:\\txm\\" + wlbm
+					+ ".txt");
+			InputStreamReader ir = new InputStreamReader(src);
+			BufferedReader br = new BufferedReader(ir);
+
+			String ss = null;
+			List list = new ArrayList();
+			int i = -1;
+
+			while ((ss = br.readLine()) != null) {
+
+				list.add(ss.toString() + "\r\n");
+
+			}
+			if (0 == list.size()) {// 判断是否存在数据
+				shengChengTXT(wlbm);
+				return getSuiJiShu(wlbm);
+
+			}
+			sjs = list.get(0).toString().trim();
+			list.remove(0);
+
+			FileOutputStream fileOutputStream = new FileOutputStream(
+					"c:\\txm\\" + wlbm + ".txt"); // 定义一个
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+					fileOutputStream);
+
+			BufferedWriter bw = new BufferedWriter(outputStreamWriter);
+
+			for (int j = 0; j < list.size(); j++) {
+
+				bw.write(list.get(j).toString());
+			}
+
+			bw.flush();
+			bw.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return sjs;
+	}
+
+	// 生成记事本里面的数据
+	public static void shengChengTXT(String wlbm) {
+
+		HashSet hs = new HashSet();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd");
+		PrintWriter pw;
+		String sj;
+		// 产生数字1到999
+		for (int i = 1; i < 1000; i++) {
+			sj = String.valueOf(i);
+			if (sj.length() < 3) {
+				for (int j = 0; j < 3 - String.valueOf(i).length(); j++) {
+					sj = "0" + sj;
+				}
+			}
+			sj = sdf.format(new Date()).toString() + sj;
+			hs.add(sj);
+		}
+		File file = new File("c:\\txm");// 创建C:/txm文件夹
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		File fl = new File("c:\\txm\\" + wlbm + ".txt");
+
+		if (!fl.exists()) {
+			try {
+				fl.createNewFile();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		// 遍历
+		Iterator iterator = hs.iterator();
+
+		try {
+			pw = new PrintWriter(new FileWriter("c:\\txm\\" + wlbm + ".txt"));
+
+			while (iterator.hasNext()) {
+
+				pw.write(iterator.next() + "\r\n");
+			}
+			pw.flush();
+			pw.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	public static void main(String[] args) {
+		ListContraller tx=new ListContraller();
+		System.out.println(getSuiJiShu);
+		
+		
+	}
+
+}

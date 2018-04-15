@@ -1,0 +1,74 @@
+package com.tz.util;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+
+
+	
+/**
+ *@author zpy
+ *@description
+ *网页下载图片工具类
+ *@data 2018年4月1日
+ */
+
+public class TmDownImgUtil {
+
+	/**
+	 *@author zpy
+	 *@description 根据网址获取网页源代码
+	 *@data 2018年4月1日
+	 *@param link 目标网址
+	 *@param encoding 网站的编码
+	 */
+	public static String htmlSpurce(String link,String encoding){
+		
+		StringBuilder stringBuilder=new StringBuilder();
+		
+		try {
+		//获取网路对象
+		URL url =new URL(link);
+		//建立网络链接
+		URLConnection uc =url.openConnection();
+		//设置伪装对象
+		uc.setRequestProperty("User_Agent", "java");
+		//下载源代码      （流）输入流、输出流  获取文件输入流
+		InputStream inputStream=uc.getInputStream();
+		//建立io流的缓存     提升效率
+		InputStreamReader in =new InputStreamReader(inputStream,encoding);
+		//下载源代码的缓冲
+		BufferedReader reader=new BufferedReader(in);
+		//开始下载源代码
+		
+		//创建一个临时文件
+		String line=null;
+		//循还
+		while((line=reader.readLine())!=null){
+			stringBuilder.append(line+"\n");
+		}
+		//关闭流
+		reader.close();
+		in.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//打印堆栈信息
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		return "";
+	}
+	
+	
+	
+	
+}

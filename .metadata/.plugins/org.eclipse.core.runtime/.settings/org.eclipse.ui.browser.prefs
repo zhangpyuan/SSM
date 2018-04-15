@@ -1,0 +1,4 @@
+browser-choice=0
+browsers=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<web-browsers current\="0">\r\n<system/>\r\n<external location\="C\:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" name\="Firefox"/>\r\n<external location\="C\:\\Program Files (x86)\\Internet Explorer\\iexplore.exe" name\="Internet Explorer"/>\r\n</web-browsers>
+eclipse.preferences.version=1
+internalWebBrowserHistory=http\://localhost\:8003/AIDS/soap/remoteSysLogService?wsdl|*|http\://localhost\:8092/demo/|*|http\://localhost\:8092/SSM/login3|*|http\://localhost\:8092/SSM/user/loginView/login3|*|http\://localhost\:8092/SSM/user/loginView|*|http\://localhost\:8092/SSM/|*|http\://localhost\:8092/easyui12/jsp/index.jsp|*|http\://localhost\:8092/BIS/serviceability/logon.do?moduleFlag\=BIS|*|http\://localhost\:8092/BIS/|*|http\://10.249.1.170/UAAMS/ws/Permission?wsdl|*|http\://localhost\:8092/BIS|*|

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+	<!-- 三期正式环境数据库 -->
+	<!-- <Resource name="jdbc/AIDS" auth="Container" type="javax.sql.DataSource" 
+		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.248.77.45)(PORT=1521)))(FAILOVER=on)(LOAD_BALANCE=on)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=CDCWDYWG)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETIRES=20)(DELAY=15))))" 
+		username="china_aids" password="embed" maxActive="4" maxIdle="2" maxWait="5000" 
+		logAbandoned="true" /> -->
+	<!-- 三期本地环境数据库 -->
+	<!-- <Resource name="jdbc/AIDS" auth="Container" type="javax.sql.DataSource" 
+		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.192.70.47)(PORT=1521)))(FAILOVER=on)(LOAD_BALANCE=on)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=SINOWH)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETIRES=20)(DELAY=15))))" 
+		username="uaams" password="embed" maxActive="4" maxIdle="2" maxWait="5000" 
+		logAbandoned="true" /> -->
+
+	<!-- -->
+	<!-- 三期测试环境数据库 -->
+	<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver"
+		logAbandoned="true" maxActive="4" maxIdle="2" maxWait="5000" name="jdbc/AIDS"
+		password="embed" type="javax.sql.DataSource"
+		url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.248.7.67)(PORT=1521)))(FAILOVER=on)(LOAD_BALANCE=on)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=cdctest)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETIRES=20)(DELAY=15))))"
+		username="china_aids" />
+
+	<!--<Resource name="jdbc/AIDS" 
+	auth="Container" 
+	type="javax.sql.DataSource" 
+		driverClassName="oracle.jdbc.driver.OracleDriver" 
+		url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.192.70.47)(PORT=1521)))(FAILOVER=on)(LOAD_BALANCE=on)(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=SINOWH)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETIRES=20)(DELAY=15))))" 
+		username="china_aids" 
+		password="embed" 
+		maxActive="4" 
+		maxIdle="2" 
+		maxWait="5000" 
+		logAbandoned="true" />  
+		<Resource auth="Container" 
+		driverClassName="oracle.jdbc.driver.OracleDriver" 
+		maxActive="100" 
+		maxIdle="30" 
+		maxWait="5000" 
+		name="jdbc/BRIS" 
+		password="embed" 
+		type="javax.sql.DataSource" 
+		url="jdbc:oracle:thin:@10.192.70.159:1521:smpora1" 
+		username="bris2"/> -->
+		
+		
+	<Resource auth="Container" 
+	driverClassName="oracle.jdbc.driver.OracleDriver"
+	maxActive="100" 
+	maxIdle="30" 
+	maxWait="5000" 
+	name="jdbc/BRIS" 
+	password="embed"
+	type="javax.sql.DataSource" 
+	url="jdbc:oracle:thin:@127.0.0.1:1521:XE"
+	username="bis2" />
+
+
+
+</Context>

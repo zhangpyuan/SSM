@@ -1,0 +1,27 @@
+package test;
+
+public class Rent_car {
+	Scanner input=new Scanner(System.in); //车库 定义父类的对象数组来 根据子类的特性 存入
+	public Car[] car={new Truck("小货车",3.5f,500f),new Truck("大货车",7.8f,800f),new Bus("小客车",12,400f), new Bus("大客车",25,900f),new Pika("小皮卡",1.1f,4,600f),new Pika("大皮卡",2.5f,6,1100f)}; //总界面+操作
+	public void welcome(){ System.out.println("欢迎使用租车系统"); while(true){ System.out.println("请问您是否租车"); System.out.println("是：输入1 否：输入任意键退出"); int n; if((n=input.nextInt())==1){ System.out.println("您可租车的类型及其价目表:"); //车辆信息 
+	getcarList(); System.out.println("请输入您要租汽车的数量"); int car_num;//租车数量 
+	car_num=input.nextInt(); //待租的汽车 将车库的信息放入其中
+	Car[] car_renting=new Car[car_num]; for(int i=1;i<=car_num;i++){ int num; System.out.println("请输入您要租的第"+i+"辆车的序号:"); num=input.nextInt(); car_renting[i-1]=car[num-1]; } //租车天数 
+	int rent_day; System.out.println("请输入租车天数"); rent_day=input.nextInt(); System.out.println("您的账单"); //总载人量
+	gettotalCarry(car_renting); //总载重量 
+	gettotalLoad(car_renting); //总金额
+	getTotalPay(car_renting,rent_day); } else{ System.out.println("输入错误 已退出"); break; } } } //输出车库的全部信息 
+	public void getcarList(){ int i; System.out.println("序号\t汽车名称\t租金\t\t容量 "); for(i=0;i<car.length;i++){ //车库中各信息不同 根据关键词 instanceof 来判别 在 向下转换输出 
+		if(car[i] instanceof Bus){ System.out.println((i+1)+"\t"+((Bus)car[i])); } else if(car[i] instanceof Truck){ System.out.println((i+1)+"\t"+((Truck)car[i])); } else{//
+			 System.out.println((i+1)+"\t"+((Pika)car[i])); } } } //总载人量 
+			public void gettotalCarry(Car[] car_renting){ int totalCarry=0; System.out.println("**可载人的车："); for(int i=0;i<car_renting.length;i++){ //载人有 Bus 和 Pika 
+				if(car_renting[i] instanceof Bus){ totalCarry+=((Bus)car_renting[i]).getCarry(); System.out.print(((Bus)car_renting[i]).name+" "); } else if(car_renting[i] instanceof Pika){ totalCarry+=((Pika)car_renting[i]).getCarry(); System.out.print(((Pika)car_renting[i]).name+" "); } } System.out.println("共载人数："+totalCarry+"人"); } //总载重量 
+			public void gettotalLoad(Car[] car_renting){ float totalLoad=0f; System.out.println("**载货的车有:"); for(int i=0;i<car_renting.length;i++){ //载重量有Truck 和 Pika 
+				if(car_renting[i] instanceof Truck){ totalLoad+=((Truck)car_renting[i]).getLoad(); System.out.print(((Truck)car_renting[i]).name+" "); } else if(car_renting[i] instanceof Pika){ totalLoad+=((Pika)car_renting[i]).getLoad(); System.out.print(((Pika)car_renting[i]).name+" "); } } System.out.println("共载重："+totalLoad+"吨"); } //总花费 
+			}
+		}
+	}
+	}
+	public void getTotalPay(Car[] car_renting,int rent_day){ float totalPay=0f; for(int i=0;i<car_renting.length;i++){ totalPay+=car_renting[i].rent; } totalPay *= rent_day; System.out.println("**租车总价格:"+totalPay); }
+	
+}
